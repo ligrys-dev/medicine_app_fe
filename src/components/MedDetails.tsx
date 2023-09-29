@@ -61,6 +61,21 @@ export const MedDetails = ({ id }: Props) => {
           <button onClick={handleEditDosageClick}>Edytuj</button>
         )}
       </p>
+
+      {med.startDate !== null && (
+        <p>
+          Data rozpoczęcia:{' '}
+          {med.startDate ? new Date(med.startDate).toLocaleDateString() : ''}
+        </p>
+      )}
+
+      {med.endDate !== null && (
+        <p>
+          Data zakoczenia:{' '}
+          {med.endDate ? new Date(med.endDate).toLocaleDateString() : ''}
+        </p>
+      )}
+
       <p>Notatka: {med.note}</p>
       <Link to="../medicine">Powrót</Link>
     </>

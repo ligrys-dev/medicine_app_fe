@@ -28,7 +28,7 @@ export function AddMed() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <p>
           <label>
-            Nazwa
+            Nazwa:
             <input {...register('name', { required: true })} />
             <FormError error={errors.name} message="To pole jest wymagane" />
           </label>
@@ -44,7 +44,7 @@ export function AddMed() {
 
         <p>
           <label>
-            Jednostka dawkowania
+            Jednostka dawkowania:
             <input {...register('dosage.doseUnit', { required: true })} />
             <FormError
               error={errors.dosage?.doseUnit}
@@ -55,7 +55,7 @@ export function AddMed() {
 
         <p>
           <label>
-            Ilość dawek dziennych
+            Ilość dawek dziennych:
             <input {...register('dosage.dailyDoses', { required: true })} />
             <FormError
               error={errors.dosage?.dailyDoses}
@@ -66,7 +66,7 @@ export function AddMed() {
 
         <p>
           <label>
-            Dawka dzienna
+            Dawka dzienna:
             <input {...register('dosage.doseQuantity', { required: true })} />
             <FormError
               error={errors.dosage?.doseQuantity}
@@ -77,7 +77,20 @@ export function AddMed() {
 
         <p>
           <label>
-            Notatka
+            Data rozpoczęcia:
+            <input type="date" {...register('startDate')} />
+          </label>
+        </p>
+        <p>
+          <label>
+            Data zakończenia:
+            <input type="date" {...register('endDate')} />
+          </label>
+        </p>
+
+        <p>
+          <label>
+            Notatka:
             <input {...register('note')} />
           </label>
         </p>
