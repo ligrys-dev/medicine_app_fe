@@ -5,10 +5,8 @@ interface Props {
   med: SimpleMedicineEntity;
 }
 
-export const Med = ({ med }: Props) => {
-  return (
-    <li>
-      {med.name} <Link to={med.id}>Szczegóły</Link>
-    </li>
-  );
-};
+export const Med = ({ med }: Props) => (
+  <li>
+    {med.name} <Link to={med.id}>Szczegóły</Link>
+  </li>
+);
