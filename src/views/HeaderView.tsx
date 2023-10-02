@@ -7,7 +7,8 @@ export const HeaderView = () => (
       <h2>Portfel e-recept i leków </h2>
     </header>
     <nav>
-      <Link to="/medicine">Leki</Link> <Link to="/medicine/add">Dodaj lek</Link>
+      <Link to="/medicine">Leki</Link> <Link to="/medicine/add">Dodaj lek</Link>{' '}
+      <Link to="/presc">Recepty</Link>
     </nav>
     <hr />
   </>
