@@ -1,7 +1,7 @@
 import ky from 'ky';
 import { useEffect, useState } from 'react';
 import { config } from '../utils/config/config';
-import { Dosage, MedicineEntity } from 'types';
+import { Dosage, MedicineEntity, PrescriptionMedicine } from 'types';
 import { Spinner } from './common/Spinner';
 import { Link } from 'react-router-dom';
 import { DosageEditor } from './DosageEditor';
@@ -13,11 +13,23 @@ interface Props {
 export const MedDetails = ({ id }: Props) => {
   const [med, setMed] = useState<MedicineEntity | null>(null);
   const [isEditingDosage, setIsEditingDosage] = useState(false);
+  const [prescriptions, setPrescriptions] = useState<
+    PrescriptionMedicine[] | null
+  >(null);
 
   useEffect(() => {
     (async () => {
-      const data = await ky.get(`${config.apiUrl}/medicine/${id}`).json();
-      setMed(data as MedicineEntity);
+      const medicineData = await ky
+        .get(`${config.apiUrl}/medicine/${id}`)
+        .json();
+      setMed(medicineData as MedicineEntity);
+
+      const prescriptionData = await ky
+        .get(`${config.apiUrl}/prescription/medicine/${id}`)
+        .json();
+
+      // console.log(prescriptionData);
+      setPrescriptions(prescriptionData as PrescriptionMedicine[]);
     })();
   }, [id]);
 
@@ -26,11 +38,9 @@ export const MedDetails = ({ id }: Props) => {
   };
 
   const handleSaveDosageClick = async (editedDosage: Dosage) => {
-    // Wyślij nowe dawkowanie na serwer
     await ky.patch(`${config.apiUrl}/medicine/${id}`, {
       json: { dosage: editedDosage },
     });
-    // Zaktualizuj lokalny stan z nowym dawkowaniem
     setMed(
       prevMed =>
         ({
@@ -38,7 +48,6 @@ export const MedDetails = ({ id }: Props) => {
           dosage: editedDosage,
         } as MedicineEntity),
     );
-    // Wyłącz tryb edycji
     setIsEditingDosage(false);
   };
 
@@ -54,8 +63,8 @@ export const MedDetails = ({ id }: Props) => {
         {isEditingDosage ? (
           <DosageEditor
             initialDosage={med.dosage}
-            onSave={handleSaveDosageClick} // Przekazujemy funkcję obsługi zapisu
-            onCancel={() => setIsEditingDosage(false)} // Dodajemy obsługę anulowania
+            onSave={handleSaveDosageClick}
+            onCancel={() => setIsEditingDosage(false)}
           />
         ) : (
           <button onClick={handleEditDosageClick}>Edytuj</button>
@@ -73,6 +82,17 @@ export const MedDetails = ({ id }: Props) => {
         <p>
           Data zakoczenia:{' '}
           {med.endDate ? new Date(med.endDate).toLocaleDateString() : ''}
+        </p>
+      )}
+
+      {prescriptions !== null && (
+        <p>
+          Numery recept:{' '}
+          {prescriptions.map(prescription => (
+            <Link to={`/presc/${prescription.id}`} key={prescription.id}>
+              {prescription.prescriptionNumber}{' '}
+            </Link>
+          ))}
         </p>
       )}
 
