@@ -11,6 +11,7 @@ export function AddMed() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<MedicineEntity>();
 
@@ -21,6 +22,13 @@ export function AddMed() {
       await ky.post(`${config.apiUrl}/medicine`, { json: data }).json(),
     );
     return insertedId as string;
+  };
+
+  const handleClear = () => {
+    // Zresetuj stan insertedId do null
+    setInsertedId(null);
+    // Wyczyść formularz za pomocą reset z react-hook-form
+    reset();
   };
 
   return (
@@ -103,13 +111,7 @@ export function AddMed() {
       {insertedId && (
         <span>
           Dodano lek z ID: {insertedId}{' '}
-          <button
-            onClick={e => {
-              e;
-            }}
-          >
-            Wyczyść
-          </button>
+          <button onClick={handleClear}>Wyczyść</button>
         </span>
       )}
     </>
