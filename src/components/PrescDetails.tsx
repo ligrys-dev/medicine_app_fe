@@ -3,6 +3,7 @@ import { PrescriptionEntity } from '../../../medicine_app_be/types';
 import { Spinner } from './common/Spinner';
 import { config } from '../utils/config/config';
 import ky from 'ky';
+import { AssignMeds } from './AssignMeds';
 
 interface Props {
   id: string;
@@ -11,6 +12,7 @@ interface Props {
 export const PrescDetails = ({ id }: Props) => {
   const [presc, setPresc] = useState<PrescriptionEntity | null>(null);
   const [meds, setMeds] = useState<string[] | null>(null);
+  const [isAssigningMeds, setIsAsigningMeds] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -22,10 +24,22 @@ export const PrescDetails = ({ id }: Props) => {
       const medsData = await ky
         .get(`${config.apiUrl}/medicine/prescription/${id}`)
         .json();
-      console.log(medsData);
+      // console.log(medsData);
       setMeds(medsData as string[]);
     })();
   }, [id]);
+
+  const handleSaveAssigning = async (assignedMedId: string) => {
+    // console.log(assignedMedId);
+    await ky.patch(`${config.apiUrl}/prescription/${id}/${assignedMedId}`);
+
+    const medsData = await ky
+      .get(`${config.apiUrl}/medicine/prescription/${id}`)
+      .json();
+
+    setMeds(medsData as string[]);
+    setIsAsigningMeds(false);
+  };
 
   if (!presc) return <Spinner />;
 
@@ -40,7 +54,17 @@ export const PrescDetails = ({ id }: Props) => {
           ? new Date(presc.expireDate.toLocaleString()).toLocaleDateString()
           : null}
       </p>
-      <p>Przypisane leki: {meds?.map(med => `${med}, `)}</p>
+      <p>
+        Przypisane leki: {meds?.map(med => `${med}, `)}
+        {isAssigningMeds ? (
+          <AssignMeds
+            onSave={handleSaveAssigning}
+            onCancel={() => setIsAsigningMeds(false)}
+          />
+        ) : (
+          <button onClick={() => setIsAsigningMeds(true)}>Przypisz leki</button>
+        )}
+      </p>
     </>
   );
 };
