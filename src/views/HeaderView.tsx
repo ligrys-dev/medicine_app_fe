@@ -8,7 +8,8 @@ export const HeaderView = () => (
     </header>
     <nav>
       <Link to="/medicine">Leki</Link> <Link to="/medicine/add">Dodaj lek</Link>{' '}
-      <Link to="/presc">Recepty</Link>
+      <Link to="/presc">Recepty</Link>{' '}
+      <Link to="/presc/add">Dodaj receptę</Link>
     </nav>
     <hr />
   </>
