@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Dosage } from 'types';
+import { CancelBtn } from './common/cancelBtn';
 
 interface Props {
   initialDosage: Dosage;
@@ -44,7 +45,7 @@ export const DosageEditor = ({ initialDosage, onSave, onCancel }: Props) => {
         onChange={handleDosageChange}
       />
       <button onClick={handleSaveClick}>Zapisz</button>
-      <button onClick={onCancel}>Anuluj</button>
+      <CancelBtn onCancel={onCancel} />
     </div>
   );
 };
