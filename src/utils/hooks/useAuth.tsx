@@ -7,7 +7,7 @@ export const useAuth = () => {
   const validateToken = () => {
     const token = localStorage.getItem('token');
     const apiToken = ky
-      .post(`${config.apiUrl}/verify`, { json: { foobar: token } })
+      .post(`${config.apiUrl}/verify`, { json: { token } })
       .json();
     if (!token || !apiToken) {
       navigate('/login');
