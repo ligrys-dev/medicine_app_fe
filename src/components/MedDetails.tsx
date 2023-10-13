@@ -1,11 +1,11 @@
-// import ky from 'ky';
 import { useEffect, useState } from 'react';
-import { config } from '../utils/config/config';
-import { Dosage, MedicineEntity, PrescriptionMedicine } from 'types';
-import { Spinner } from './common/Spinner';
 import { Link } from 'react-router-dom';
-import { DosageEditor } from './DosageEditor';
-import { api } from '../utils/api';
+import { Dosage, MedicineEntity, PrescriptionMedicine } from 'types';
+// import ky from 'ky';
+import { config } from 'src/utils/config/config';
+import { Spinner } from 'src/components/common/Spinner';
+import { DosageEditor } from 'src/components/DosageEditor';
+import { api } from 'src/utils/api';
 
 interface Props {
   id: string;

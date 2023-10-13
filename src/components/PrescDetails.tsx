@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { PrescriptionEntity } from '../../../medicine_app_be/types';
-import { Spinner } from './common/Spinner';
-import { config } from '../utils/config/config';
 // import ky from 'ky';
-import { AssignMeds } from './AssignMeds';
-import { api } from '../utils/api';
+import { PrescriptionEntity } from '../../../medicine_app_be/types';
+import { Spinner } from 'src/components/common/Spinner';
+import { config } from 'src/utils/config/config';
+import { AssignMeds } from 'src/components/AssignMeds';
+import { api } from 'src/utils/api';
 
 interface Props {
   id: string;

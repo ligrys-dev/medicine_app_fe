@@ -1,9 +1,9 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { CancelBtn } from './common/cancelBtn';
-import { SimpleMedicineEntity } from 'types';
-import { config } from '../utils/config/config';
-import { api } from '../utils/api';
 // import ky from 'ky';
+import { SimpleMedicineEntity } from 'types';
+import { CancelBtn } from 'src/components/common/cancelBtn';
+import { config } from 'src/utils/config/config';
+import { api } from 'src/utils/api';
 
 interface Props {
   onCancel: () => void;

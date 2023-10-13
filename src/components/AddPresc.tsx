@@ -1,10 +1,10 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-// import ky from 'ky';
-import { config } from '../utils/config/config';
 import { useState } from 'react';
-import { FormError } from './common/FormError';
+// import ky from 'ky';
 import { PrescriptionEntity } from 'types';
-import { api } from '../utils/api';
+import { config } from 'src/utils/config/config';
+import { FormError } from 'src/components/common/FormError';
+import { api } from 'src/utils/api';
 
 export function AddPresc() {
   const [insertedId, setInsertedId] = useState<string | null>(null);

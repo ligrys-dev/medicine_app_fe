@@ -1,7 +1,7 @@
 // Login.tsx
 import ky from 'ky';
 import { FC, useState } from 'react';
-import { config } from '../../utils/config/config';
+import { config } from 'src/utils/config/config';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const Login: FC = () => {

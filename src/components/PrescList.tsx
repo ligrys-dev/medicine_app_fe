@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { PrescriptionEntity } from '../../../medicine_app_be/types';
 // import ky from 'ky';
-import { config } from '../utils/config/config';
-import { Spinner } from './common/Spinner';
-import { Presc } from './Presc';
-import { api } from '../utils/api';
+import { config } from 'src/utils/config/config';
+import { Spinner } from 'src/components/common/Spinner';
+import { Presc } from 'src/components/Presc';
+import { api } from 'src/utils/api';
 
 export const PrescList = () => {
   const [prescs, setPrescss] = useState<PrescriptionEntity[] | null>(null);

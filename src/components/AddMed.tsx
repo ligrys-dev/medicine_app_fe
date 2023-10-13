@@ -1,10 +1,10 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { MedicineEntity } from 'types';
 // import ky from 'ky';
-import { config } from '../utils/config/config';
+import { config } from 'src/utils/config/config';
 import { useState } from 'react';
-import { FormError } from './common/FormError';
-import { api } from '../utils/api';
+import { FormError } from 'src/components/common/FormError';
+import { api } from 'src/utils/api';
 
 export function AddMed() {
   const [insertedId, setInsertedId] = useState<string | null>(null);

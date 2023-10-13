@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Dosage } from 'types';
-import { CancelBtn } from './common/cancelBtn';
+import { CancelBtn } from 'src/components/common/cancelBtn';
 
 interface Props {
   initialDosage: Dosage;
@@ -11,7 +11,7 @@ interface Props {
 export const DosageEditor = ({ initialDosage, onSave, onCancel }: Props) => {
   const [editedDosage, setEditedDosage] = useState<Dosage>(initialDosage);
 
-  const handleDosageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDosageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEditedDosage(prevDosage => ({
       ...prevDosage,

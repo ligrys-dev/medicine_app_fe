@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { SimpleMedicineEntity } from 'types';
 // import ky from 'ky';
-import { config } from '../utils/config/config';
-import { Med } from './Med';
-import { Spinner } from './common/Spinner';
-import { api } from '../utils/api';
+import { config } from 'src/utils/config/config';
+import { Med } from 'src/components/Med';
+import { Spinner } from 'src/components/common/Spinner';
+import { api } from 'src/utils/api';
 
 export const MedsList = () => {
   const [meds, setMeds] = useState<SimpleMedicineEntity[] | null>(null);

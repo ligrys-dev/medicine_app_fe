@@ -1,9 +1,8 @@
-// App.tsx
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { Login } from './components/Auth/Login';
-import { Register } from './components/Auth/Register';
-import { AppView } from './views/AppView';
 import { ReactNode } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Login } from 'src/components/Auth/Login';
+import { Register } from 'src/components/Auth/Register';
+import { AppView } from 'src/views/AppView';
 
 interface Props {
   children: ReactNode;
