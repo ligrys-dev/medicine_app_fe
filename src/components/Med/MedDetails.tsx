@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Dosage, MedicineEntity, PrescriptionMedicine } from 'types';
 // import ky from 'ky';
 import { config } from 'src/utils/config/config';
@@ -17,6 +17,7 @@ export const MedDetails = ({ id }: Props) => {
   const [prescriptions, setPrescriptions] = useState<
     PrescriptionMedicine[] | null
   >(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -50,6 +51,13 @@ export const MedDetails = ({ id }: Props) => {
         } as MedicineEntity),
     );
     setIsEditingDosage(false);
+  };
+
+  const handleDeleteMedClick = async () => {
+    if (window.confirm('Czy na pewno chcesz usunąć ten lek?')) {
+      await api.delete(`${config.apiUrl}/medicine/${id}`);
+      navigate('/medicine');
+    }
   };
 
   if (med === null) return <Spinner />;
@@ -99,6 +107,7 @@ export const MedDetails = ({ id }: Props) => {
 
       <p>Notatka: {med.note}</p>
       <Link to="../medicine">Powrót</Link>
+      <button onClick={() => handleDeleteMedClick}>Usuń</button>
     </>
   );
 };

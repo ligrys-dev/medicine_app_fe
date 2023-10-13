@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { MedDetails } from 'src/components/MedDetails';
+import { MedDetails } from 'src/components/Med/MedDetails';
 import { useAuth } from 'src/utils/hooks/useAuth';
 
 export const SingleMedView = () => {

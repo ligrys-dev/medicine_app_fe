@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 // import ky from 'ky';
-import { PrescriptionEntity } from '../../../medicine_app_be/types';
+import { PrescriptionEntity } from '../../../../medicine_app_be/types';
 import { Spinner } from 'src/components/common/Spinner';
 import { config } from 'src/utils/config/config';
 import { AssignMeds } from 'src/components/AssignMeds';
 import { api } from 'src/utils/api';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   id: string;
@@ -14,6 +15,7 @@ export const PrescDetails = ({ id }: Props) => {
   const [presc, setPresc] = useState<PrescriptionEntity | null>(null);
   const [meds, setMeds] = useState<string[] | null>(null);
   const [isAssigningMeds, setIsAsigningMeds] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -42,6 +44,13 @@ export const PrescDetails = ({ id }: Props) => {
     setIsAsigningMeds(false);
   };
 
+  const handleDeletePrescClick = async () => {
+    if (window.confirm('Czy na pewno chcesz usunąć ten lek?')) {
+      await api.delete(`${config.apiUrl}/prescription/${id}`);
+      navigate('/medicine');
+    }
+  };
+
   if (!presc) return <Spinner />;
 
   return (
@@ -66,6 +75,7 @@ export const PrescDetails = ({ id }: Props) => {
           <button onClick={() => setIsAsigningMeds(true)}>Przypisz leki</button>
         )}
       </p>
+      <button onClick={() => handleDeletePrescClick}>Usuń</button>
     </>
   );
 };
