@@ -1,28 +1,36 @@
-import { Routes, Route } from 'react-router-dom';
-import { FooterView } from './views/FooterView';
-import { HeaderView } from './views/HeaderView';
-import { MedView } from './views/MedsView';
-import { SingleMedView } from './views/SingleMedView';
-import { MedFormView } from './views/MedFormView';
-import { PrescView } from './views/PrescView';
-import { SinglePrescView } from './views/SinglePrescView';
-import { PrescFormView } from './views/PrescFormView';
+// App.tsx
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Login } from './components/Auth/Login';
+import { Register } from './components/Auth/Register';
+import { AppView } from './views/AppView';
+import { ReactNode } from 'react';
 
-import './App.css';
-
-export function App() {
-  return (
-    <>
-      <HeaderView />
-      <Routes>
-        <Route path="/medicine" element={<MedView />} />
-        <Route path="/medicine/:id" element={<SingleMedView />} />
-        <Route path="/medicine/add" element={<MedFormView />} />
-        <Route path="/presc" element={<PrescView />} />
-        <Route path="/presc/:id" element={<SinglePrescView />} />
-        <Route path="/presc/add" element={<PrescFormView />} />
-      </Routes>
-      <FooterView />
-    </>
-  );
+interface Props {
+  children: ReactNode;
 }
+
+const PrivateRoute = ({ children }: Props) => {
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   navigate('/login');
+  // }, [navigate]);
+
+  const isAuthenticated = !!localStorage.getItem('token');
+  if (!isAuthenticated) {
+    navigate('/login');
+    return null;
+  }
+
+  return children;
+};
+
+export const App = () => {
+  return (
+    <Routes>
+      <Route path="/login" Component={Login} />
+      <Route path="/register" Component={Register} />
+      <Route path="*" element={<PrivateRoute children={<AppView />} />}></Route>
+    </Routes>
+  );
+};
