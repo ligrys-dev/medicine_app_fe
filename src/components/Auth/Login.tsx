@@ -1,47 +1,57 @@
 // Login.tsx
 import ky from 'ky';
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
+import { config } from '../../utils/config/config';
+import { Link, useNavigate } from 'react-router-dom';
 
-export const Login: React.FC = () => {
+export const Login: FC = () => {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [pwd, setPwd] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      const response = await ky.post('/login', {
-        json: { username, password },
-      });
+      const response = await ky
+        .post(`${config.apiUrl}/login`, {
+          json: { username, pwd },
+        })
+        .json();
 
-      const token = response.body;
+      const token = response as { token: string };
 
       console.log(token);
 
-      // Zapisz token w localStorage lub ciasteczku (zależnie od potrzeb)
-      // localStorage.setItem('token', token);
+      localStorage.setItem('token', token.token);
 
-      // Przekieruj użytkownika do innej strony po zalogowaniu
-      // np. history.push('/dashboard')
+      navigate('/');
     } catch (error) {
       console.error('Login failed:', error);
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
-    </div>
+    <>
+      <div>
+        <h2>Logowanie</h2>
+        <input
+          type="text"
+          placeholder="nazwa użytkownika"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="hasło"
+          value={pwd}
+          onChange={e => setPwd(e.target.value)}
+        />
+        <button onClick={handleLogin}>Zaloguj</button>
+      </div>
+      <div>
+        <p>
+          Nie masz jeszcze konta? <Link to="/register"> Załóż je! </Link>
+        </p>
+      </div>
+    </>
   );
 };
