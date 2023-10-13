@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Logout } from 'src/components/Auth/Logout';
 
 export const HeaderView = () => (
   <>
@@ -11,6 +12,9 @@ export const HeaderView = () => (
       <Link to="/presc">Recepty</Link>{' '}
       <Link to="/presc/add">Dodaj receptę</Link>
     </nav>
+    <div>
+      <Logout />
+    </div>
     <hr />
   </>
 );
