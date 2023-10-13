@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { PrescriptionEntity } from '../../../medicine_app_be/types';
 import { Spinner } from './common/Spinner';
 import { config } from '../utils/config/config';
-import ky from 'ky';
+// import ky from 'ky';
 import { AssignMeds } from './AssignMeds';
+import { api } from '../utils/api';
 
 interface Props {
   id: string;
@@ -16,12 +17,12 @@ export const PrescDetails = ({ id }: Props) => {
 
   useEffect(() => {
     (async () => {
-      const prescData = await ky
+      const prescData = await api
         .get(`${config.apiUrl}/prescription/${id}`)
         .json();
       setPresc(prescData as PrescriptionEntity);
 
-      const medsData = await ky
+      const medsData = await api
         .get(`${config.apiUrl}/medicine/prescription/${id}`)
         .json();
       // console.log(medsData);
@@ -31,9 +32,9 @@ export const PrescDetails = ({ id }: Props) => {
 
   const handleSaveAssigning = async (assignedMedId: string) => {
     // console.log(assignedMedId);
-    await ky.patch(`${config.apiUrl}/prescription/${id}/${assignedMedId}`);
+    await api.patch(`${config.apiUrl}/prescription/${id}/${assignedMedId}`);
 
-    const medsData = await ky
+    const medsData = await api
       .get(`${config.apiUrl}/medicine/prescription/${id}`)
       .json();
 

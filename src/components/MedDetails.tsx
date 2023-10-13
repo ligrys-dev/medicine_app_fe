@@ -1,10 +1,11 @@
-import ky from 'ky';
+// import ky from 'ky';
 import { useEffect, useState } from 'react';
 import { config } from '../utils/config/config';
 import { Dosage, MedicineEntity, PrescriptionMedicine } from 'types';
 import { Spinner } from './common/Spinner';
 import { Link } from 'react-router-dom';
 import { DosageEditor } from './DosageEditor';
+import { api } from '../utils/api';
 
 interface Props {
   id: string;
@@ -19,12 +20,12 @@ export const MedDetails = ({ id }: Props) => {
 
   useEffect(() => {
     (async () => {
-      const medicineData = await ky
+      const medicineData = await api
         .get(`${config.apiUrl}/medicine/${id}`)
         .json();
       setMed(medicineData as MedicineEntity);
 
-      const prescriptionData = await ky
+      const prescriptionData = await api
         .get(`${config.apiUrl}/prescription/medicine/${id}`)
         .json();
 
@@ -38,7 +39,7 @@ export const MedDetails = ({ id }: Props) => {
   };
 
   const handleSaveDosageClick = async (editedDosage: Dosage) => {
-    await ky.patch(`${config.apiUrl}/medicine/${id}`, {
+    await api.patch(`${config.apiUrl}/medicine/${id}`, {
       json: { dosage: editedDosage },
     });
     setMed(

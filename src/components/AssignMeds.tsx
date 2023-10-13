@@ -2,7 +2,8 @@ import { SyntheticEvent, useEffect, useState } from 'react';
 import { CancelBtn } from './common/cancelBtn';
 import { SimpleMedicineEntity } from 'types';
 import { config } from '../utils/config/config';
-import ky from 'ky';
+import { api } from '../utils/api';
+// import ky from 'ky';
 
 interface Props {
   onCancel: () => void;
@@ -15,7 +16,7 @@ export const AssignMeds = ({ onCancel, onSave }: Props) => {
 
   useEffect(() => {
     (async () => {
-      const data = await ky.get(`${config.apiUrl}/medicine/`).json();
+      const data = await api.get(`${config.apiUrl}/medicine/`).json();
 
       setMeds(data as SimpleMedicineEntity[]);
     })();

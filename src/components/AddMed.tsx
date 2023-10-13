@@ -1,9 +1,10 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { MedicineEntity } from 'types';
-import ky from 'ky';
+// import ky from 'ky';
 import { config } from '../utils/config/config';
 import { useState } from 'react';
 import { FormError } from './common/FormError';
+import { api } from '../utils/api';
 
 export function AddMed() {
   const [insertedId, setInsertedId] = useState<string | null>(null);
@@ -19,7 +20,7 @@ export function AddMed() {
     data: MedicineEntity,
   ): Promise<string> => {
     setInsertedId(
-      await ky.post(`${config.apiUrl}/medicine`, { json: data }).json(),
+      await api.post(`${config.apiUrl}/medicine`, { json: data }).json(),
     );
     return insertedId as string;
   };

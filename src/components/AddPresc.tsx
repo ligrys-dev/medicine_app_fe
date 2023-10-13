@@ -1,9 +1,10 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import ky from 'ky';
+// import ky from 'ky';
 import { config } from '../utils/config/config';
 import { useState } from 'react';
 import { FormError } from './common/FormError';
 import { PrescriptionEntity } from 'types';
+import { api } from '../utils/api';
 
 export function AddPresc() {
   const [insertedId, setInsertedId] = useState<string | null>(null);
@@ -20,7 +21,7 @@ export function AddPresc() {
   ): Promise<string> => {
     console.log(data);
     setInsertedId(
-      await ky.post(`${config.apiUrl}/prescription`, { json: data }).json(),
+      await api.post(`${config.apiUrl}/prescription`, { json: data }).json(),
     );
     return insertedId as string;
   };
