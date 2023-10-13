@@ -1,3 +1,3 @@
-import { AddPresc } from '../components/AddPresc';
+import { AddPresc } from 'src/components/AddPresc';
 
 export const PrescFormView = () => <AddPresc />;
