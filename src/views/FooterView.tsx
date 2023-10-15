@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useAuth } from 'src/utils/hooks/useAuth';
+import styled from 'styled-components';
 
 export const FooterView = () => {
   const { validateToken } = useAuth();
@@ -10,10 +11,18 @@ export const FooterView = () => {
 
   return (
     <>
-      <hr />
-      <footer>
+      <Footer>
         <p>ligrys 2023</p>
-      </footer>
+      </Footer>
     </>
   );
 };
+
+const Footer = styled.footer`
+  text-align: center;
+  background: navy;
+  color: white;
+  width: 80vw;
+  margin: 0 auto;
+  border-radius: 0.2rem;
+`;

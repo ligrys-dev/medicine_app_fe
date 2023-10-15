@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
 import { PrescriptionEntity } from 'types';
+import { DeleteBtn } from '../common/DeleteBtn';
+import { StyledLink } from '../styled/StyledLink';
 
 interface Props {
   presc: PrescriptionEntity;
@@ -8,10 +9,10 @@ interface Props {
 
 export const Presc = ({ presc, onPrescDelete }: Props) => (
   <li>
-    {presc.prescriptionNumber}{' '}
-    <Link to={presc.id ?? ''} state={presc}>
+    <div>{presc.prescriptionNumber}</div>{' '}
+    <StyledLink to={presc.id ?? ''} state={presc}>
       Szczegóły
-    </Link>
-    <button onClick={() => onPrescDelete(presc.id ?? '')}>Usuń</button>
+    </StyledLink>
+    <DeleteBtn onClick={() => onPrescDelete(presc.id ?? '')}>Usuń</DeleteBtn>
   </li>
 );

@@ -1,4 +1,6 @@
 :root {
   line-height: 1.5;
   font-family: 'Roboto condensed', Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  box-sizing: border-box;
 }

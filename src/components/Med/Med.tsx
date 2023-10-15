@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
 import { SimpleMedicineEntity } from 'types';
+import { StyledLink } from '../styled/StyledLink';
+import { DeleteBtn } from '../common/DeleteBtn';
 
 interface Props {
   med: SimpleMedicineEntity;
@@ -8,7 +9,8 @@ interface Props {
 
 export const Med = ({ med, onDeleteMed }: Props) => (
   <li>
-    {med.name} <Link to={med.id}>Szczegóły</Link>
-    <button onClick={() => onDeleteMed(med.id)}>Usuń</button>
+    <div> {med.name} </div>
+    <StyledLink to={med.id}>Szczegóły</StyledLink>
+    <DeleteBtn onClick={() => onDeleteMed(med.id)}>Usuń</DeleteBtn>
   </li>
 );

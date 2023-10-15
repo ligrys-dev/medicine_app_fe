@@ -3,9 +3,13 @@ import { useEffect, useState } from 'react';
 import { PrescriptionEntity } from '../../../../medicine_app_be/types';
 import { Spinner } from 'src/components/common/Spinner';
 import { config } from 'src/utils/config/config';
-import { AssignMeds } from 'src/components/AssignMeds';
+import { AssignMeds } from 'src/components/Prescription/AssignMeds';
 import { api } from 'src/utils/api';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { DeleteBtn } from '../common/DeleteBtn';
+import { ConfirmBtn } from '../common/ConfirmBtn';
+import { StyledLink } from '../styled/StyledLink';
 
 interface Props {
   id: string;
@@ -54,17 +58,19 @@ export const PrescDetails = ({ id }: Props) => {
   if (!presc) return <Spinner />;
 
   return (
-    <>
-      <p>Szczegóły recepty:</p>
-      <p>Numer recepty: {presc.prescriptionNumber}</p>
-      <p>Data wystawienia: {new Date(presc.issueDate).toLocaleDateString()}</p>
-      <p>
+    <PrescContainer>
+      <h2>Szczegóły recepty:</h2>
+      <div>Numer recepty: {presc.prescriptionNumber}</div>
+      <div>
+        Data wystawienia: {new Date(presc.issueDate).toLocaleDateString()}
+      </div>
+      <div>
         Data ważności:{' '}
         {presc.expireDate
           ? new Date(presc.expireDate.toLocaleString()).toLocaleDateString()
           : null}
-      </p>
-      <p>
+      </div>
+      <div>
         Przypisane leki: {meds?.map(med => `${med}, `)}
         {isAssigningMeds ? (
           <AssignMeds
@@ -72,10 +78,26 @@ export const PrescDetails = ({ id }: Props) => {
             onCancel={() => setIsAsigningMeds(false)}
           />
         ) : (
-          <button onClick={() => setIsAsigningMeds(true)}>Przypisz leki</button>
+          <ConfirmBtn onClick={() => setIsAsigningMeds(true)}>
+            Przypisz leki
+          </ConfirmBtn>
         )}
-      </p>
-      <button onClick={() => handleDeletePrescClick}>Usuń</button>
-    </>
+      </div>
+      <StyledLink to="../presc">Powrót</StyledLink>
+
+      <DeleteBtn onClick={() => handleDeletePrescClick}>Usuń receptę</DeleteBtn>
+    </PrescContainer>
   );
 };
+
+const PrescContainer = styled.div`
+  /* border: 1px solid; */
+  width: 80vw;
+  margin: 0 auto;
+  line-height: 2rem;
+  text-align: center;
+
+  button {
+    margin: 0 auto;
+  }
+`;

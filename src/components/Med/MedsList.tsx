@@ -5,6 +5,7 @@ import { config } from 'src/utils/config/config';
 import { Med } from 'src/components/Med/Med';
 import { Spinner } from 'src/components/common/Spinner';
 import { api } from 'src/utils/api';
+import { StyledList } from '../styled/StyledList';
 
 export const MedsList = () => {
   const [meds, setMeds] = useState<SimpleMedicineEntity[] | null>(null);
@@ -30,11 +31,11 @@ export const MedsList = () => {
 
   return (
     <>
-      <ul>
+      <StyledList>
         {meds.map(med => (
           <Med key={med.id} med={med} onDeleteMed={handleDeleteMed} />
         ))}
-      </ul>
+      </StyledList>
     </>
   );
 };

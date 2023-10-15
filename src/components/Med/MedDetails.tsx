@@ -4,8 +4,12 @@ import { Dosage, MedicineEntity, PrescriptionMedicine } from 'types';
 // import ky from 'ky';
 import { config } from 'src/utils/config/config';
 import { Spinner } from 'src/components/common/Spinner';
-import { DosageEditor } from 'src/components/DosageEditor';
+import { DosageEditor } from 'src/components/Med/DosageEditor';
 import { api } from 'src/utils/api';
+import styled from 'styled-components';
+import { DeleteBtn } from '../common/DeleteBtn';
+import { ConfirmBtn } from '../common/ConfirmBtn';
+import { StyledLink } from '../styled/StyledLink';
 
 interface Props {
   id: string;
@@ -62,11 +66,11 @@ export const MedDetails = ({ id }: Props) => {
 
   if (med === null) return <Spinner />;
   return (
-    <>
-      <p>
+    <MedContainer>
+      <div>
         {med.name} - {med.form}
-      </p>
-      <p>
+      </div>
+      <div>
         Dawkowanie: {med.dosage.dailyDoses} x {med.dosage.doseQuantity}{' '}
         {med.dosage.doseUnit}{' '}
         {isEditingDosage ? (
@@ -76,38 +80,50 @@ export const MedDetails = ({ id }: Props) => {
             onCancel={() => setIsEditingDosage(false)}
           />
         ) : (
-          <button onClick={handleEditDosageClick}>Edytuj</button>
+          <ConfirmBtn onClick={handleEditDosageClick}>Edytuj</ConfirmBtn>
         )}
-      </p>
+      </div>
 
       {med.startDate !== null && (
-        <p>
+        <div>
           Data rozpoczęcia:{' '}
           {med.startDate ? new Date(med.startDate).toLocaleDateString() : ''}
-        </p>
+        </div>
       )}
 
       {med.endDate !== null && (
-        <p>
+        <div>
           Data zakoczenia:{' '}
           {med.endDate ? new Date(med.endDate).toLocaleDateString() : ''}
-        </p>
+        </div>
       )}
 
       {prescriptions !== null && (
-        <p>
+        <div>
           Numery recept:{' '}
           {prescriptions.map(prescription => (
             <Link to={`/presc/${prescription.id}`} key={prescription.id}>
               {prescription.prescriptionNumber}{' '}
             </Link>
           ))}
-        </p>
+        </div>
       )}
 
-      <p>Notatka: {med.note}</p>
-      <Link to="../medicine">Powrót</Link>
-      <button onClick={() => handleDeleteMedClick}>Usuń</button>
-    </>
+      <div>Notatka: {med.note}</div>
+      <StyledLink to="../medicine">Powrót</StyledLink>
+      <DeleteBtn onClick={() => handleDeleteMedClick}>Usuń</DeleteBtn>
+    </MedContainer>
   );
 };
+
+const MedContainer = styled.div`
+  /* border: 1px solid; */
+  width: 80vw;
+  margin: 0 auto;
+  line-height: 2rem;
+  text-align: center;
+
+  button {
+    margin: 0 auto;
+  }
+`;

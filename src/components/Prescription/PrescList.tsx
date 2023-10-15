@@ -5,6 +5,7 @@ import { config } from 'src/utils/config/config';
 import { Spinner } from 'src/components/common/Spinner';
 import { Presc } from 'src/components/Prescription/Presc';
 import { api } from 'src/utils/api';
+import { StyledList } from '../styled/StyledList';
 
 export const PrescList = () => {
   const [prescs, setPrescss] = useState<PrescriptionEntity[] | null>(null);
@@ -28,7 +29,7 @@ export const PrescList = () => {
   if (prescs === null) return <Spinner />;
 
   return (
-    <ul>
+    <StyledList>
       {prescs.map(presc => (
         <Presc
           key={presc.id}
@@ -36,6 +37,6 @@ export const PrescList = () => {
           onPrescDelete={handleDeletePresc}
         ></Presc>
       ))}
-    </ul>
+    </StyledList>
   );
 };

@@ -1,9 +1,10 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 // import ky from 'ky';
 import { SimpleMedicineEntity } from 'types';
-import { CancelBtn } from 'src/components/common/cancelBtn';
+import { CancelBtn } from 'src/components/common/CancelBtn';
 import { config } from 'src/utils/config/config';
 import { api } from 'src/utils/api';
+import styled from 'styled-components';
 
 interface Props {
   onCancel: () => void;
@@ -29,8 +30,8 @@ export const AssignMeds = ({ onCancel, onSave }: Props) => {
   };
 
   return (
-    <>
-      <p>Przypisz leki</p>
+    <Container>
+      <div>Przypisz leki</div>
       <form onSubmit={handleSubmit}>
         <label>
           Wybierz opcję:
@@ -46,9 +47,47 @@ export const AssignMeds = ({ onCancel, onSave }: Props) => {
           </select>
         </label>
 
-        <button type="submit">Wyślij</button>
+        <Submit type="submit">Wyślij</Submit>
       </form>
       <CancelBtn onCancel={onCancel} />
-    </>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  margin: 0 auto;
+  width: 40vw;
+  border: 3px solid navy;
+  border-radius: 0.3rem;
+  color: white;
+  background: navy;
+
+  form {
+    label {
+      select {
+        margin: 0 1rem;
+        border-radius: 1rem;
+        color: navy;
+        padding: 0.15rem;
+      }
+    }
+  }
+`;
+
+const Submit = styled.button`
+  /* display: block; */
+  margin: 0 0.8rem;
+  margin-left: 1rem;
+  padding: 0.2rem 0.5rem;
+  text-transform: uppercase;
+  background: navy;
+  color: white;
+  border: 1px solid white;
+  border-radius: 2rem;
+  transition: 0.2s;
+
+  &:hover {
+    color: navy;
+    background: white;
+  }
+`;
