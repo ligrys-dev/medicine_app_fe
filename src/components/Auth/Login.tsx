@@ -3,16 +3,33 @@ import { FC, useState } from 'react';
 import { config } from 'src/utils/config/config';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { ConfirmBtn } from '../common/ConfirmBtn';
 import { StyledAuthLink } from '../styled/StyledAuthLink';
 import Cookie from 'js-cookie';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { StyledSubmit } from '../styled/StyledSubmit';
+import { FormError } from '../common/FormError';
+import { StyledBtn } from '../styled/StyledBtn';
+
+interface LoginData {
+  username: string;
+  pwd: string;
+}
 
 export const Login: FC = () => {
-  const [username, setUsername] = useState('');
-  const [pwd, setPwd] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginData>();
+
+  const onSubmit: SubmitHandler<LoginData> = async ({
+    username,
+    pwd,
+  }: LoginData): Promise<void> => {
     try {
       const response = await ky
         .post(`${config.apiUrl}/login`, {
@@ -35,22 +52,37 @@ export const Login: FC = () => {
   return (
     <LoginContainer>
       <h1>Portfel leków i e-recept</h1>
-      <LoginForm>
+      <LoginForm onSubmit={handleSubmit(onSubmit)}>
         <h2>Logowanie</h2>
         <div>
-          <input
-            type="text"
-            placeholder="nazwa użytkownika"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="hasło"
-            value={pwd}
-            onChange={e => setPwd(e.target.value)}
-          />
-          <ConfirmBtn onClick={handleLogin}>Zaloguj</ConfirmBtn>
+          <label>
+            <input
+              type="text"
+              placeholder="nazwa użytownika"
+              {...register('username', { required: true })}
+            />
+            <FormError
+              error={errors.username}
+              message="To pole jest wymagane"
+            />
+          </label>
+
+          <label>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="hasło"
+              {...register('pwd', { required: true })}
+            />
+            <FormError error={errors.pwd} message="To pole jest wymagane" />
+            <StyledBtn
+              onClick={() => setShowPassword(prev => !prev)}
+              type="button"
+            >
+              👁️
+            </StyledBtn>
+          </label>
+
+          <StyledSubmit type="submit" />
         </div>
       </LoginForm>
       <div>
@@ -80,7 +112,7 @@ const LoginContainer = styled.div`
   }
 `;
 
-const LoginForm = styled.div`
+const LoginForm = styled.form`
   h2 {
     text-transform: uppercase;
     letter-spacing: 0.3rem;

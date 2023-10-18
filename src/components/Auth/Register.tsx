@@ -3,16 +3,41 @@ import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { config } from 'src/utils/config/config';
-import { ConfirmBtn } from '../common/ConfirmBtn';
 import { StyledAuthLink } from '../styled/StyledAuthLink';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { StyledSubmit } from '../styled/StyledSubmit';
+import { FormError } from '../common/FormError';
+import { StyledBtn } from '../styled/StyledBtn';
+
+interface RegisterData {
+  username: string;
+  email: string;
+  password: string;
+  confirmPwd: string;
+}
 
 export const Register: FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleRegister = async () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<RegisterData>();
+
+  const onSubmit: SubmitHandler<RegisterData> = async ({
+    username,
+    password,
+    email,
+    confirmPwd,
+  }: RegisterData): Promise<void> => {
+    if (password !== confirmPwd) {
+      console.log(errors.confirmPwd);
+      setError('confirmPwd', { type: 'manual', message: 'Hasła nie pasują' });
+      return;
+    }
     try {
       await ky.post(`${config.apiUrl}/register`, {
         json: { username, password, email },
@@ -27,29 +52,63 @@ export const Register: FC = () => {
   return (
     <RegisterContainer>
       <h1>Portfel leków i e-recept</h1>
-      <RegisterForm>
+      <RegisterForm onSubmit={handleSubmit(onSubmit)}>
         <h2>Rejstracja</h2>
         <div>
-          <input
-            type="text"
-            placeholder="nazwa użytkownika"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
+          <label>
+            <input
+              type="text"
+              placeholder="nazwa użytkownika"
+              {...register('username', { required: true })}
+            />
+            <FormError
+              error={errors.username}
+              message="To pole jest wymagane"
+            />
+          </label>
 
-          <input
-            type="email"
-            placeholder="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="hasło"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          <ConfirmBtn onClick={handleRegister}>Zarejestruj</ConfirmBtn>
+          <label>
+            <input
+              type="email"
+              placeholder="email"
+              {...register('email', { required: true })}
+            />
+            <FormError error={errors.email} message="To pole jest wymagane" />
+          </label>
+
+          <label>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="hasło"
+              {...register('password', { required: true })}
+            />
+
+            <FormError
+              error={errors.password}
+              message="To pole jest wymagane"
+            />
+          </label>
+
+          <label>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              placeholder="powtóż hasło"
+              {...register('confirmPwd', { required: true })}
+            />
+            <FormError
+              error={errors.confirmPwd}
+              message={
+                errors.confirmPwd?.type === 'required'
+                  ? 'To pole jest wymagane'
+                  : 'Hasła nie pasują'
+              }
+            />
+          </label>
+
+          <StyledBtn onClick={() => setShowPassword(prev => !prev)}>
+            👁️
+          </StyledBtn>
+          <StyledSubmit type="submit" />
         </div>
       </RegisterForm>
       <div>
@@ -78,7 +137,7 @@ const RegisterContainer = styled.div`
   }
 `;
 
-const RegisterForm = styled.div`
+const RegisterForm = styled.form`
   h2 {
     text-transform: uppercase;
     letter-spacing: 0.3rem;
