@@ -12,7 +12,7 @@ export const FooterView = () => {
   return (
     <>
       <Footer>
-        <p>ligrys 2023</p>
+        <p>Projekt na zaliczenie MegaK -- Maciej Ligęza 2023</p>
       </Footer>
     </>
   );

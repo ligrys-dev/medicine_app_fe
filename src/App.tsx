@@ -18,6 +18,7 @@ const PrivateRoute = ({ children }: Props) => {
     useEffect(() => {
       navigate('/login');
     });
+    return 'Zostałeś wylogowany';
   }
 
   return children;
