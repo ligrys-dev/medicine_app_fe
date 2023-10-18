@@ -39,6 +39,7 @@ export const AssignMeds = ({ onCancel, onSave }: Props) => {
             value={selectedOption}
             onChange={e => setSelectedOption(e.target.value)}
           >
+            <option value="">--wybierz--</option>
             {meds?.map(med => (
               <option key={med.id} value={med.id}>
                 {med.name}
