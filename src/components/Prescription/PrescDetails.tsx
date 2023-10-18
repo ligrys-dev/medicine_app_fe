@@ -8,7 +8,7 @@ import { api } from 'src/utils/api';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { DeleteBtn } from '../common/DeleteBtn';
-import { ConfirmBtn } from '../common/ConfirmBtn';
+import { StyledBtn } from '../styled/StyledBtn';
 import { StyledLink } from '../styled/StyledLink';
 
 interface Props {
@@ -78,9 +78,9 @@ export const PrescDetails = ({ id }: Props) => {
             onCancel={() => setIsAsigningMeds(false)}
           />
         ) : (
-          <ConfirmBtn onClick={() => setIsAsigningMeds(true)}>
+          <StyledBtn onClick={() => setIsAsigningMeds(true)}>
             Przypisz leki
-          </ConfirmBtn>
+          </StyledBtn>
         )}
       </div>
       <StyledLink to="../presc">Powrót</StyledLink>

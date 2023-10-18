@@ -5,7 +5,7 @@ import { PrescriptionEntity } from 'types';
 import { config } from 'src/utils/config/config';
 import { FormError } from 'src/components/common/FormError';
 import { api } from 'src/utils/api';
-import { ConfirmBtn } from '../common/ConfirmBtn';
+import { StyledBtn } from '../styled/StyledBtn';
 import { StyledSubmit } from '../styled/StyledSubmit';
 import { StyledInput } from '../styled/form/StyledInput';
 import { Container } from '../styled/form/Container';
@@ -26,7 +26,7 @@ export function AddPresc() {
   const onSubmit: SubmitHandler<PrescriptionEntity> = async (
     data: PrescriptionEntity,
   ): Promise<string> => {
-    console.log(data);
+    // console.log(data);
     setInsertedId(
       await api.post(`${config.apiUrl}/prescription`, { json: data }).json(),
     );
@@ -97,7 +97,7 @@ export function AddPresc() {
       {insertedId && (
         <span>
           Dodano receptę z ID: {insertedId}{' '}
-          <ConfirmBtn onClick={handleClear}>Wyczyść</ConfirmBtn>
+          <StyledBtn onClick={handleClear}>Wyczyść</StyledBtn>
         </span>
       )}
     </Container>

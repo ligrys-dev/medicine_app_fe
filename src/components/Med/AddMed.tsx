@@ -5,7 +5,7 @@ import { config } from 'src/utils/config/config';
 import { useState } from 'react';
 import { FormError } from 'src/components/common/FormError';
 import { api } from 'src/utils/api';
-import { ConfirmBtn } from '../common/ConfirmBtn';
+import { StyledBtn } from '../styled/StyledBtn';
 import { StyledSubmit } from '../styled/StyledSubmit';
 import { StyledInput } from '../styled/form/StyledInput';
 import { Container } from '../styled/form/Container';
@@ -120,7 +120,7 @@ export function AddMed() {
       {insertedId && (
         <span>
           Dodano lek z ID: {insertedId}{' '}
-          <ConfirmBtn onClick={handleClear}>Wyczyść</ConfirmBtn>
+          <StyledBtn onClick={handleClear}>Wyczyść</StyledBtn>
         </span>
       )}
     </Container>

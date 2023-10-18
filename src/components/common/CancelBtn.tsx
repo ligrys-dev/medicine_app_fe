@@ -1,9 +1,9 @@
-import { ConfirmBtn } from './ConfirmBtn';
+import { StyledBtn } from '../styled/StyledBtn';
 
 interface Props {
   onCancel: () => void;
 }
 
 export const CancelBtn = ({ onCancel }: Props) => {
-  return <ConfirmBtn onClick={onCancel}>Anuluj</ConfirmBtn>;
+  return <StyledBtn onClick={onCancel}>Anuluj</StyledBtn>;
 };

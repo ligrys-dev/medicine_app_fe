@@ -8,7 +8,7 @@ import { DosageEditor } from 'src/components/Med/DosageEditor';
 import { api } from 'src/utils/api';
 import styled from 'styled-components';
 import { DeleteBtn } from '../common/DeleteBtn';
-import { ConfirmBtn } from '../common/ConfirmBtn';
+import { StyledBtn } from '../styled/StyledBtn';
 import { StyledLink } from '../styled/StyledLink';
 
 interface Props {
@@ -80,7 +80,7 @@ export const MedDetails = ({ id }: Props) => {
             onCancel={() => setIsEditingDosage(false)}
           />
         ) : (
-          <ConfirmBtn onClick={handleEditDosageClick}>Edytuj</ConfirmBtn>
+          <StyledBtn onClick={handleEditDosageClick}>Edytuj</StyledBtn>
         )}
       </div>
 

@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { Dosage } from 'types';
 import styled from 'styled-components';
 import { CancelBtn } from '../common/CancelBtn';
-import { ConfirmBtn } from '../common/ConfirmBtn';
+import { StyledBtn } from '../styled/StyledBtn';
 
 interface Props {
   initialDosage: Dosage;
@@ -48,7 +48,7 @@ export const DosageEditor = ({ initialDosage, onSave, onCancel }: Props) => {
           value={editedDosage.doseUnit}
           onChange={handleDosageChange}
         />
-        <ConfirmBtn onClick={handleSaveClick}>Zapisz</ConfirmBtn>{' '}
+        <StyledBtn onClick={handleSaveClick}>Zapisz</StyledBtn>{' '}
         <CancelBtn onCancel={onCancel} />
       </StyledForm>
     </Container>
