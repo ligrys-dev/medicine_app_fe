@@ -1,9 +1,9 @@
 import { FieldErrors } from 'react-hook-form';
-import { MedicineEntity } from 'types';
+import { MedicineEntity, PrescriptionEntity } from 'types';
 
 interface Props {
   message: string;
-  error: FieldErrors<MedicineEntity> | undefined;
+  error: FieldErrors<MedicineEntity | PrescriptionEntity> | undefined;
 }
 
 export const FormError = ({ message, error }: Props) => {
