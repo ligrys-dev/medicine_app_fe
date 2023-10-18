@@ -1,4 +1,6 @@
-import { ReactNode } from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import Cookies from 'js-cookie';
+import { ReactNode, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Login } from 'src/components/Auth/Login';
 import { Register } from 'src/components/Auth/Register';
@@ -11,14 +13,11 @@ interface Props {
 const PrivateRoute = ({ children }: Props) => {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   navigate('/login');
-  // }, [navigate]);
-
-  const isAuthenticated = !!localStorage.getItem('token');
+  const isAuthenticated = !!Cookies.get('token');
   if (!isAuthenticated) {
-    navigate('/login');
-    return null;
+    useEffect(() => {
+      navigate('/login');
+    });
   }
 
   return children;

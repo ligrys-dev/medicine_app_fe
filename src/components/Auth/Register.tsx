@@ -1,9 +1,8 @@
-// Register.tsx
 import ky from 'ky';
 import { FC, useState } from 'react';
-import { config } from 'src/utils/config/config';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { config } from 'src/utils/config/config';
 import { ConfirmBtn } from '../common/ConfirmBtn';
 import { StyledAuthLink } from '../styled/StyledAuthLink';
 

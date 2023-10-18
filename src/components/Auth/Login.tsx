@@ -1,4 +1,3 @@
-// Login.tsx
 import ky from 'ky';
 import { FC, useState } from 'react';
 import { config } from 'src/utils/config/config';
@@ -6,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ConfirmBtn } from '../common/ConfirmBtn';
 import { StyledAuthLink } from '../styled/StyledAuthLink';
+import Cookie from 'js-cookie';
 
 export const Login: FC = () => {
   const [username, setUsername] = useState('');
@@ -22,9 +22,9 @@ export const Login: FC = () => {
 
       const token = response as { token: string };
 
-      console.log(token);
-
-      localStorage.setItem('token', token.token);
+      Cookie.set('token', token.token, {
+        expires: 1 / 24,
+      });
 
       navigate('/');
     } catch (error) {

@@ -1,8 +1,9 @@
+import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Logout = () => {
-  const onLogout = () => localStorage.removeItem('token');
+  const onLogout = () => Cookies.remove('token');
 
   return (
     <StyledLink onClick={onLogout} to="/login">
