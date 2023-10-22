@@ -32,8 +32,9 @@ export const Slider = styled.span`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: #c2d8ed;
   transition: 0.4s;
+  border: 2px solid navy;
   border-radius: 34px;
 
   &::before {
@@ -42,7 +43,7 @@ export const Slider = styled.span`
     height: 1.25rem;
     width: 1.25rem;
     left: 4px;
-    bottom: 4px;
+    bottom: 2px;
     background-color: white;
     transition: 0.4s;
     border-radius: 50%;
