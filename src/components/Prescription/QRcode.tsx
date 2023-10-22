@@ -51,12 +51,16 @@ const QR = styled.div`
   position: absolute;
   top: 20%;
   bottom: 10%;
-  left: 10%;
-  right: 10%;
+  left: 10vw;
+  right: 10vw;
   background: navy;
   color: white;
   border: 2px solid;
   text-align: center;
-  border: 2px solid;
-  border-radius: 0.2rem;
+  border: 2px solid navy;
+  border-radius: 0.3rem;
+
+  img {
+    border-radius: 0.3rem;
+  }
 `;

@@ -74,13 +74,13 @@ export const Login: FC = () => {
               {...register('pwd', { required: true })}
             />
             <FormError error={errors.pwd} message="To pole jest wymagane" />
-            <StyledBtn
-              onClick={() => setShowPassword(prev => !prev)}
-              type="button"
-            >
-              👁️
-            </StyledBtn>
           </label>
+          <StyledBtn
+            onClick={() => setShowPassword(prev => !prev)}
+            type="button"
+          >
+            👁️
+          </StyledBtn>
 
           <StyledSubmit type="submit" />
         </div>
@@ -124,17 +124,20 @@ const LoginForm = styled.form`
 
   div {
     text-align: center;
-    input {
-      background: navy;
-      color: white;
-      padding: 0.2rem 0.5rem;
-      margin: 0.2rem 0.3rem;
-      border: 2px solid navy;
-      border-radius: 1rem;
-
-      &::placeholder {
+    label {
+      display: block;
+      input {
+        background: navy;
         color: white;
-        opacity: 70%;
+        padding: 0.2rem 0.5rem;
+        margin: 0.2rem 0.3rem;
+        border: 2px solid navy;
+        border-radius: 1rem;
+
+        &::placeholder {
+          color: white;
+          opacity: 70%;
+        }
       }
     }
   }

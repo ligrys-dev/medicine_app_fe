@@ -21,6 +21,7 @@ const StyledBtn = styled.button`
   border-radius: 1rem;
   padding: 0.2rem 1rem;
   transition: 0.2s;
+  cursor: pointer;
 
   &:hover {
     background: white;
