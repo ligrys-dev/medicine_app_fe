@@ -43,7 +43,7 @@ export const Login: FC = () => {
         expires: 1 / 24,
       });
 
-      navigate('/');
+      navigate('/presc');
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -90,6 +90,9 @@ export const Login: FC = () => {
           Nie masz jeszcze konta?{' '}
           <StyledAuthLink to="/register"> Zarejestruj się! </StyledAuthLink>
         </p>
+        <StyledBtn onClick={() => onSubmit({ username: 'test', pwd: 'haslo' })}>
+          Wypróbuj demo{' '}
+        </StyledBtn>
       </div>
     </LoginContainer>
   );
