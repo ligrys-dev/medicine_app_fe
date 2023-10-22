@@ -16,11 +16,14 @@ export const StyledList = styled.ul`
     justify-content: space-between;
     margin: 0.5rem;
     flex-basis: 35%;
-    /* border: 1px solid; */
+    border: 2px solid navy;
+    border-radius: 2rem;
+    padding: 0.2rem;
     text-align: center;
 
     div {
       flex-grow: 1;
+      align-self: center;
     }
   }
 `;
