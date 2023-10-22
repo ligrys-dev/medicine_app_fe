@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { AddPresc } from 'src/components/Prescription/AddPresc';
+import { StyledSectionHeader } from 'src/components/styled/StyledSectionHeader';
 import { useAuth } from 'src/utils/hooks/useAuth';
 
 export const PrescFormView = () => {
@@ -9,5 +10,10 @@ export const PrescFormView = () => {
     validateToken();
   });
 
-  return <AddPresc />;
+  return (
+    <>
+      <StyledSectionHeader>Dodaj receptę</StyledSectionHeader>
+      <AddPresc />;
+    </>
+  );
 };

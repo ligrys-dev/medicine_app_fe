@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { MedsList } from 'src/components/Med/MedsList';
+import { StyledSectionHeader } from 'src/components/styled/StyledSectionHeader';
 import { useAuth } from 'src/utils/hooks/useAuth';
 
 export const MedView = () => {
@@ -9,5 +10,9 @@ export const MedView = () => {
     validateToken();
   });
 
-  return <MedsList />;
+  return (
+    <>
+      <StyledSectionHeader>Leki</StyledSectionHeader> <MedsList />;
+    </>
+  );
 };

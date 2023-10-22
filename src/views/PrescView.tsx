@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { PrescList } from 'src/components/Prescription/PrescList';
+import { StyledSectionHeader } from 'src/components/styled/StyledSectionHeader';
 import { useAuth } from 'src/utils/hooks/useAuth';
 
 export const PrescView = () => {
@@ -9,5 +10,10 @@ export const PrescView = () => {
     validateToken();
   });
 
-  return <PrescList />;
+  return (
+    <>
+      <StyledSectionHeader>Recepty</StyledSectionHeader>
+      <PrescList />;
+    </>
+  );
 };

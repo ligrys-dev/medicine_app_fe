@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { AddMed } from 'src/components/Med/AddMed';
+import { StyledSectionHeader } from 'src/components/styled/StyledSectionHeader';
 import { useAuth } from 'src/utils/hooks/useAuth';
 
 export const MedFormView = () => {
@@ -9,5 +10,10 @@ export const MedFormView = () => {
     validateToken();
   });
 
-  return <AddMed />;
+  return (
+    <>
+      <StyledSectionHeader>Dodaj lek</StyledSectionHeader>
+      <AddMed />;
+    </>
+  );
 };
