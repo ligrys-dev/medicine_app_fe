@@ -12,6 +12,7 @@ import { StyledBtn } from '../styled/StyledBtn';
 interface RegisterData {
   username: string;
   email: string;
+  PESELnumber: string;
   password: string;
   confirmPwd: string;
 }
@@ -31,16 +32,17 @@ export const Register: FC = () => {
     username,
     password,
     email,
+    PESELnumber,
     confirmPwd,
   }: RegisterData): Promise<void> => {
     if (password !== confirmPwd) {
-      console.log(errors.confirmPwd);
       setError('confirmPwd', { type: 'manual', message: 'Hasła nie pasują' });
       return;
     }
+
     try {
       await ky.post(`${config.apiUrl}/register`, {
-        json: { username, password, email },
+        json: { username, password, email, PESELnumber },
       });
 
       navigate('/login');
@@ -78,6 +80,15 @@ export const Register: FC = () => {
 
           <label>
             <input
+              type="number"
+              placeholder="PESEL"
+              {...register('PESELnumber', { required: true })}
+            />
+            <FormError error={errors.email} message="To pole jest wymagane" />
+          </label>
+
+          <label>
+            <input
               type={showPassword ? 'text' : 'password'}
               placeholder="hasło"
               {...register('password', { required: true })}
@@ -105,7 +116,10 @@ export const Register: FC = () => {
             />
           </label>
 
-          <StyledBtn onClick={() => setShowPassword(prev => !prev)}>
+          <StyledBtn
+            type="button"
+            onClick={() => setShowPassword(prev => !prev)}
+          >
             👁️
           </StyledBtn>
           <StyledSubmit type="submit" />
