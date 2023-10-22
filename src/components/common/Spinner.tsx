@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
-export const Spinner = () => (
-  <Div>
+interface Props {
+  color?: string;
+}
+
+export const Spinner = ({ color }: Props) => (
+  <Div color={color}>
     <div></div>
     <div></div>
     <div></div>
@@ -23,11 +27,13 @@ const Div = styled.div`
     width: 64px;
     height: 64px;
     margin: 8px;
-    border: 8px solid navy;
+    border: 8px solid ${props => props.color || 'navy'};
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: navy transparent transparent transparent;
+    border-color: ${props => props.color || 'navy'} transparent transparent
+      transparent;
   }
+
   div:nth-child(1) {
     animation-delay: -0.45s;
   }
@@ -37,6 +43,7 @@ const Div = styled.div`
   div:nth-child(3) {
     animation-delay: -0.15s;
   }
+
   @keyframes lds-ring {
     0% {
       transform: rotate(0deg);
