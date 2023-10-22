@@ -46,11 +46,19 @@ export function AddPresc() {
             <StyledSpan>Numer recepty:</StyledSpan>
             <StyledInput
               type="number"
-              {...register('prescriptionNumber', { required: true })}
+              {...register('prescriptionNumber', {
+                required: true,
+                maxLength: 4,
+                minLength: 4,
+              })}
             />
             <FormError
               error={errors.prescriptionNumber}
-              message="To pole jest wymagane"
+              message={
+                errors.prescriptionNumber?.type === 'required'
+                  ? 'To pole jest wymagane'
+                  : 'Długość recepty musi wynosić dokładnie 4 cyfry'
+              }
             />
           </StyledLabel>
         </p>
@@ -60,11 +68,15 @@ export function AddPresc() {
             <StyledSpan>Data wystawienia:</StyledSpan>
             <StyledInput
               type="Date"
-              {...register('issueDate', { required: true })}
+              {...register('issueDate', { required: true, valueAsDate: true })}
             />
             <FormError
               error={errors.issueDate}
-              message="To pole jest wymagane"
+              message={
+                errors.issueDate?.type === 'required'
+                  ? 'To pole jest wymagane'
+                  : 'Data wystawienia musi być datą'
+              }
             />
           </StyledLabel>
         </p>

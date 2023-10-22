@@ -42,8 +42,17 @@ export function AddMed() {
         <p>
           <StyledLabel>
             <StyledSpan>Nazwa:</StyledSpan>
-            <StyledInput {...register('name', { required: true })} />
-            <FormError error={errors.name} message="To pole jest wymagane" />
+            <StyledInput
+              {...register('name', { required: true, maxLength: 100 })}
+            />
+            <FormError
+              error={errors.name}
+              message={
+                errors.name?.type === 'reqiured'
+                  ? 'To pole jest wymagane'
+                  : 'Maksymalna długość to 100'
+              }
+            />
           </StyledLabel>
         </p>
 
@@ -108,7 +117,11 @@ export function AddMed() {
         <p>
           <StyledLabel>
             <StyledSpan>Notatka:</StyledSpan>
-            <StyledInput {...register('note')} />
+            <StyledInput {...register('note', { maxLength: 1000 })} />
+            <FormError
+              error={errors.note}
+              message="Maksymalna długość notatki to 1000 znaków"
+            />
           </StyledLabel>
         </p>
 

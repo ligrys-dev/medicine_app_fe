@@ -82,9 +82,20 @@ export const Register: FC = () => {
             <input
               type="number"
               placeholder="PESEL"
-              {...register('PESELnumber', { required: true })}
+              {...register('PESELnumber', {
+                required: true,
+                maxLength: 11,
+                minLength: 11,
+              })}
             />
-            <FormError error={errors.email} message="To pole jest wymagane" />
+            <FormError
+              error={errors.email}
+              message={
+                errors.email?.type === 'required'
+                  ? 'To pole jest wymagane'
+                  : 'PESEL musi zawierać dokładnie 11 cyfr'
+              }
+            />
           </label>
 
           <label>
@@ -160,17 +171,20 @@ const RegisterForm = styled.form`
 
   div {
     text-align: center;
-    input {
-      background: navy;
-      color: white;
-      padding: 0.2rem 0.5rem;
-      margin: 0.3rem 0.3rem;
-      border: 2px solid navy;
-      border-radius: 1rem;
-
-      &::placeholder {
+    label {
+      display: block;
+      input {
+        background: navy;
         color: white;
-        opacity: 70%;
+        padding: 0.2rem 0.5rem;
+        margin: 0.3rem 0.3rem;
+        border: 2px solid navy;
+        border-radius: 1rem;
+
+        &::placeholder {
+          color: white;
+          opacity: 70%;
+        }
       }
     }
   }
