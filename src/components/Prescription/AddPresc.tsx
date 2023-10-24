@@ -1,10 +1,13 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
-// import ky from 'ky';
+import { HTTPError } from 'ky';
 import { PrescriptionEntity } from 'types';
 import { config } from 'src/utils/config/config';
-import { FormError } from 'src/components/common/FormError';
 import { api } from 'src/utils/api';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
+import { ErrorPage } from '../common/ErrorPage';
+import { FormError } from 'src/components/common/FormError';
+
 import { StyledBtn } from '../styled/StyledBtn';
 import { StyledSubmit } from '../styled/StyledSubmit';
 import { StyledInput } from '../styled/form/StyledInput';
@@ -15,7 +18,7 @@ import { Slider, Switch } from '../styled/form/Toggle';
 
 export function AddPresc() {
   const [insertedId, setInsertedId] = useState<string | null>(null);
-
+  const { error, clearError, handleError } = useErrorHandler();
   const {
     register,
     handleSubmit,
@@ -25,17 +28,36 @@ export function AddPresc() {
 
   const onSubmit: SubmitHandler<PrescriptionEntity> = async (
     data: PrescriptionEntity,
-  ): Promise<string> => {
-    setInsertedId(
-      await api.post(`${config.apiUrl}/prescription`, { json: data }).json(),
-    );
-    return insertedId as string;
+  ): Promise<string | undefined> => {
+    try {
+      setInsertedId(
+        await api
+          .post(`${config.apiUrl}/prescription`, {
+            json: data,
+          })
+          .json(),
+      );
+
+      return insertedId as string;
+    } catch (e) {
+      handleError(e as HTTPError);
+    }
   };
 
   const handleClear = () => {
     setInsertedId(null);
+    clearError();
     reset();
   };
+
+  if (error)
+    return (
+      <>
+        <ErrorPage error={error}>
+          <StyledBtn onClick={handleClear}>Wyczyść</StyledBtn>
+        </ErrorPage>
+      </>
+    );
 
   return (
     <Container>
@@ -67,6 +89,7 @@ export function AddPresc() {
             <StyledSpan>Data wystawienia:</StyledSpan>
             <StyledInput
               type="Date"
+              defaultValue={new Date().toISOString().slice(0, 10)}
               {...register('issueDate', { required: true, valueAsDate: true })}
             />
             <FormError

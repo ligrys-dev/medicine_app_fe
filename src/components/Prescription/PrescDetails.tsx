@@ -10,6 +10,9 @@ import styled from 'styled-components';
 import { DeleteBtn } from '../common/DeleteBtn';
 import { StyledBtn } from '../styled/StyledBtn';
 import { StyledLink } from '../styled/StyledLink';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
+import { ErrorPage } from '../common/ErrorPage';
+import { HTTPError } from 'ky';
 
 interface Props {
   id: string;
@@ -19,21 +22,27 @@ export const PrescDetails = ({ id }: Props) => {
   const [presc, setPresc] = useState<PrescriptionEntity | null>(null);
   const [meds, setMeds] = useState<string[] | null>(null);
   const [isAssigningMeds, setIsAsigningMeds] = useState(false);
+  const { error, clearError, handleError } = useErrorHandler();
+
   const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
-      const prescData = await api
-        .get(`${config.apiUrl}/prescription/${id}`)
-        .json();
-      setPresc(prescData as PrescriptionEntity);
+      try {
+        const prescData = await api
+          .get(`${config.apiUrl}/prescription/${id}`)
+          .json();
+        setPresc(prescData as PrescriptionEntity);
 
-      const medsData = await api
-        .get(`${config.apiUrl}/medicine/prescription/${id}`)
-        .json();
-      setMeds(medsData as string[]);
+        const medsData = await api
+          .get(`${config.apiUrl}/medicine/prescription/${id}`)
+          .json();
+        setMeds(medsData as string[]);
+      } catch (e) {
+        handleError(e as HTTPError);
+      }
     })();
-  }, [id]);
+  }, [id, handleError]);
 
   const handleSaveAssigning = async (assignedMedId: string) => {
     await api.patch(`${config.apiUrl}/prescription/${id}/${assignedMedId}`);
@@ -54,6 +63,15 @@ export const PrescDetails = ({ id }: Props) => {
   };
 
   if (!presc) return <Spinner />;
+
+  if (error)
+    return (
+      <>
+        <ErrorPage error={error}>
+          <StyledBtn onClick={clearError}>Wyczyść</StyledBtn>
+        </ErrorPage>
+      </>
+    );
 
   return (
     <PrescContainer>

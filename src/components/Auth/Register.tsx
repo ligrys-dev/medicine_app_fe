@@ -1,4 +1,4 @@
-import ky from 'ky';
+import ky, { HTTPError } from 'ky';
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { StyledSubmit } from '../styled/StyledSubmit';
 import { FormError } from '../common/FormError';
 import { StyledBtn } from '../styled/StyledBtn';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
+import { ErrorPage } from '../common/ErrorPage';
 
 interface RegisterData {
   username: string;
@@ -20,6 +22,7 @@ interface RegisterData {
 export const Register: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { error, clearError, handleError } = useErrorHandler();
 
   const {
     register,
@@ -46,10 +49,19 @@ export const Register: FC = () => {
       });
 
       navigate('/login');
-    } catch (error) {
-      console.error('Registration failed:', error);
+    } catch (e) {
+      handleError(e as HTTPError);
     }
   };
+
+  if (error)
+    return (
+      <>
+        <ErrorPage error={error}>
+          <StyledBtn onClick={clearError}>Wyczyść</StyledBtn>
+        </ErrorPage>
+      </>
+    );
 
   return (
     <RegisterContainer>

@@ -1,4 +1,4 @@
-import ky from 'ky';
+import ky, { HTTPError } from 'ky';
 import { FC, useState } from 'react';
 import { config } from 'src/utils/config/config';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { StyledSubmit } from '../styled/StyledSubmit';
 import { FormError } from '../common/FormError';
 import { StyledBtn } from '../styled/StyledBtn';
+import { ErrorPage } from '../common/ErrorPage';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
 
 interface LoginData {
   username: string;
@@ -17,6 +19,7 @@ interface LoginData {
 
 export const Login: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { error, clearError, handleError } = useErrorHandler();
 
   const navigate = useNavigate();
 
@@ -44,10 +47,19 @@ export const Login: FC = () => {
       });
 
       navigate('/presc');
-    } catch (error) {
-      console.error('Login failed:', error);
+    } catch (e) {
+      handleError(e as HTTPError);
     }
   };
+
+  if (error)
+    return (
+      <>
+        <ErrorPage error={error}>
+          <StyledBtn onClick={clearError}>Wyczyść</StyledBtn>
+        </ErrorPage>
+      </>
+    );
 
   return (
     <LoginContainer>

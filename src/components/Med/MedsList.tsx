@@ -6,28 +6,50 @@ import { Med } from 'src/components/Med/Med';
 import { Spinner } from 'src/components/common/Spinner';
 import { api } from 'src/utils/api';
 import { StyledList } from '../styled/StyledList';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
+import { ErrorPage } from '../common/ErrorPage';
+import { StyledBtn } from '../styled/StyledBtn';
+import { HTTPError } from 'ky';
 
 export const MedsList = () => {
   const [meds, setMeds] = useState<SimpleMedicineEntity[] | null>(null);
+  const { error, clearError, handleError } = useErrorHandler();
 
   useEffect(() => {
-    (async () => {
-      const data = await api.get(`${config.apiUrl}/medicine/`).json();
+    try {
+      (async () => {
+        const data = await api.get(`${config.apiUrl}/medicine/`).json();
 
-      setMeds(data as SimpleMedicineEntity[]);
-    })();
-  }, []);
+        setMeds(data as SimpleMedicineEntity[]);
+      })();
+    } catch (e) {
+      handleError(e as HTTPError);
+    }
+  }, [handleError]);
 
   const handleDeleteMed = async (id: string) => {
     if (window.confirm('Czy na pewno chcesz usunąć ten lek?')) {
-      await api.delete(`${config.apiUrl}/medicine/${id}`);
+      try {
+        await api.delete(`${config.apiUrl}/medicine/${id}`);
 
-      const data = await api.get(`${config.apiUrl}/medicine/`).json();
-      setMeds(data as SimpleMedicineEntity[]);
+        const data = await api.get(`${config.apiUrl}/medicine/`).json();
+        setMeds(data as SimpleMedicineEntity[]);
+      } catch (e) {
+        handleError(e as HTTPError);
+      }
     }
   };
 
   if (meds === null) return <Spinner />;
+
+  if (error)
+    return (
+      <>
+        <ErrorPage error={error}>
+          <StyledBtn onClick={clearError}>Wyczyść</StyledBtn>
+        </ErrorPage>
+      </>
+    );
 
   return (
     <>

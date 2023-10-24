@@ -5,6 +5,10 @@ import { CancelBtn } from 'src/components/common/CancelBtn';
 import { config } from 'src/utils/config/config';
 import { api } from 'src/utils/api';
 import styled from 'styled-components';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
+import { HTTPError } from 'ky';
+import { ErrorPage } from '../common/ErrorPage';
+import { StyledBtn } from '../styled/StyledBtn';
 
 interface Props {
   onCancel: () => void;
@@ -14,19 +18,37 @@ interface Props {
 export const AssignMeds = ({ onCancel, onSave }: Props) => {
   const [selectedOption, setSelectedOption] = useState('');
   const [meds, setMeds] = useState<SimpleMedicineEntity[] | null>(null);
+  const { error, clearError, handleError } = useErrorHandler();
 
   useEffect(() => {
     (async () => {
-      const data = await api.get(`${config.apiUrl}/medicine/`).json();
+      try {
+        const data = await api.get(`${config.apiUrl}/medicine/`).json();
 
-      setMeds(data as SimpleMedicineEntity[]);
+        setMeds(data as SimpleMedicineEntity[]);
+      } catch (e) {
+        handleError(e as HTTPError);
+      }
     })();
-  }, []);
+  }, [handleError]);
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     onSave(selectedOption);
   };
+
+  if (error)
+    return (
+      <>
+        if (error) return (
+        <>
+          <ErrorPage error={error}>
+            <StyledBtn onClick={clearError}>Wyczyść</StyledBtn>
+          </ErrorPage>
+        </>
+        );
+      </>
+    );
 
   return (
     <Container>

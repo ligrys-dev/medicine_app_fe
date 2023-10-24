@@ -10,6 +10,9 @@ import styled from 'styled-components';
 import { DeleteBtn } from '../common/DeleteBtn';
 import { StyledBtn } from '../styled/StyledBtn';
 import { StyledLink } from '../styled/StyledLink';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
+import { ErrorPage } from '../common/ErrorPage';
+import { HTTPError } from 'ky';
 
 interface Props {
   id: string;
@@ -22,48 +25,71 @@ export const MedDetails = ({ id }: Props) => {
     PrescriptionMedicine[] | null
   >(null);
   const navigate = useNavigate();
+  const { error, clearError, handleError } = useErrorHandler();
 
   useEffect(() => {
-    (async () => {
-      const medicineData = await api
-        .get(`${config.apiUrl}/medicine/${id}`)
-        .json();
-      setMed(medicineData as MedicineEntity);
+    try {
+      (async () => {
+        const medicineData = await api
+          .get(`${config.apiUrl}/medicine/${id}`)
+          .json();
+        setMed(medicineData as MedicineEntity);
 
-      const prescriptionData = await api
-        .get(`${config.apiUrl}/prescription/medicine/${id}`)
-        .json();
+        const prescriptionData = await api
+          .get(`${config.apiUrl}/prescription/medicine/${id}`)
+          .json();
 
-      setPrescriptions(prescriptionData as PrescriptionMedicine[]);
-    })();
-  }, [id]);
+        setPrescriptions(prescriptionData as PrescriptionMedicine[]);
+      })();
+    } catch (e) {
+      handleError(e as HTTPError);
+    }
+  }, [id, handleError]);
 
   const handleEditDosageClick = () => {
     setIsEditingDosage(true);
   };
 
   const handleSaveDosageClick = async (editedDosage: Dosage) => {
-    await api.patch(`${config.apiUrl}/medicine/${id}`, {
-      json: { dosage: editedDosage },
-    });
-    setMed(
-      prevMed =>
-        ({
-          ...prevMed,
-          dosage: editedDosage,
-        } as MedicineEntity),
-    );
-    setIsEditingDosage(false);
+    try {
+      await api.patch(`${config.apiUrl}/medicine/${id}`, {
+        json: { dosage: editedDosage },
+      });
+      setMed(
+        prevMed =>
+          ({
+            ...prevMed,
+            dosage: editedDosage,
+          } as MedicineEntity),
+      );
+      setIsEditingDosage(false);
+    } catch (e) {
+      handleError(e as HTTPError);
+    }
   };
 
   const handleDeleteMedClick = async () => {
     if (window.confirm('Czy na pewno chcesz usunąć ten lek?')) {
-      await api.delete(`${config.apiUrl}/medicine/${id}`);
-      navigate('/medicine');
+      try {
+        await api.delete(`${config.apiUrl}/medicine/${id}`);
+        navigate('/medicine');
+      } catch (e) {
+        handleError(e as HTTPError);
+      }
     }
   };
 
   if (med === null) return <Spinner />;
+
+  if (error)
+    return (
+      <>
+        <ErrorPage error={error}>
+          <StyledBtn onClick={clearError}>Wyczyść</StyledBtn>
+        </ErrorPage>
+      </>
+    );
+
   return (
     <MedContainer>
       <div>

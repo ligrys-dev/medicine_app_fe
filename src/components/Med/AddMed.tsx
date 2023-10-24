@@ -11,9 +11,13 @@ import { StyledInput } from '../styled/form/StyledInput';
 import { Container } from '../styled/form/Container';
 import { StyledSpan } from '../styled/form/StyledSpan';
 import { StyledLabel } from '../styled/form/StyledLabel';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
+import { ErrorPage } from '../common/ErrorPage';
+import { HTTPError } from 'ky';
 
 export function AddMed() {
   const [insertedId, setInsertedId] = useState<string | null>(null);
+  const { error, clearError, handleError } = useErrorHandler();
 
   const {
     register,
@@ -24,17 +28,30 @@ export function AddMed() {
 
   const onSubmit: SubmitHandler<MedicineEntity> = async (
     data: MedicineEntity,
-  ): Promise<string> => {
-    setInsertedId(
-      await api.post(`${config.apiUrl}/medicine`, { json: data }).json(),
-    );
-    return insertedId as string;
+  ): Promise<string | undefined> => {
+    try {
+      setInsertedId(
+        await api.post(`${config.apiUrl}/medicine`, { json: data }).json(),
+      );
+      return insertedId as string;
+    } catch (e) {
+      handleError(e as HTTPError);
+    }
   };
 
   const handleClear = () => {
     setInsertedId(null);
     reset();
   };
+
+  if (error)
+    return (
+      <>
+        <ErrorPage error={error}>
+          <StyledBtn onClick={clearError}>Wyczyść</StyledBtn>
+        </ErrorPage>
+      </>
+    );
 
   return (
     <Container>
