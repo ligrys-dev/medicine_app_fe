@@ -1,10 +1,10 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import Cookies from 'js-cookie';
 import { ReactNode, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Login } from 'src/components/Auth/Login';
 import { Register } from 'src/components/Auth/Register';
 import { AppView } from 'src/views/AppView';
+import { useAuth } from './utils/hooks/useAuth';
 
 interface Props {
   children: ReactNode;
@@ -13,13 +13,17 @@ interface Props {
 const PrivateRoute = ({ children }: Props) => {
   const navigate = useNavigate();
 
+  const { validateToken } = useAuth();
+
+  useEffect(() => {
+    validateToken();
+  }, [validateToken]);
+
   const isAuthenticated = !!Cookies.get('token');
-  if (!isAuthenticated) {
-    useEffect(() => {
-      navigate('/login');
-    });
-    return 'Zostałeś wylogowany';
-  }
+
+  useEffect(() => {
+    if (!isAuthenticated) navigate('/login');
+  }, [isAuthenticated, navigate]);
 
   return children;
 };
@@ -27,8 +31,8 @@ const PrivateRoute = ({ children }: Props) => {
 export const App = () => {
   return (
     <Routes>
-      <Route path="/login" Component={Login} />
-      <Route path="/register" Component={Register} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route path="*" element={<PrivateRoute children={<AppView />} />}></Route>
     </Routes>
   );

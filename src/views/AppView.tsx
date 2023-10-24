@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useAuth } from 'src/utils/hooks/useAuth';
 import { FooterView } from 'src/views/FooterView';
 import { HeaderView } from 'src/views/HeaderView';
 import { MedFormView } from 'src/views/MedFormView';
@@ -11,12 +9,6 @@ import { SingleMedView } from 'src/views/SingleMedView';
 import { SinglePrescView } from 'src/views/SinglePrescView';
 
 export const AppView = () => {
-  const { validateToken } = useAuth();
-
-  useEffect(() => {
-    validateToken();
-  });
-
   return (
     <>
       <HeaderView />

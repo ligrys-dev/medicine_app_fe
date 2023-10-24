@@ -1,14 +1,6 @@
-import { useEffect } from 'react';
-import { useAuth } from 'src/utils/hooks/useAuth';
 import styled from 'styled-components';
 
 export const FooterView = () => {
-  const { validateToken } = useAuth();
-
-  useEffect(() => {
-    validateToken();
-  });
-
   return (
     <>
       <Footer>

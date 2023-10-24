@@ -1,15 +1,8 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Logout } from 'src/components/Auth/Logout';
-import { useAuth } from 'src/utils/hooks/useAuth';
 import styled from 'styled-components';
 
 export const HeaderView = () => {
-  const { validateToken } = useAuth();
-
-  useEffect(() => {
-    validateToken();
-  });
   return (
     <HeaderContainer>
       <StyledHeader>
