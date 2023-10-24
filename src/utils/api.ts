@@ -5,7 +5,6 @@ export const api = ky.extend({
   hooks: {
     beforeRequest: [
       request => {
-        // const token = localStorage.getItem('token');
         const token = Cookies.get('token');
 
         if (token) {
