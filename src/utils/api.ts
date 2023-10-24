@@ -13,4 +13,5 @@ export const api = ky.extend({
       },
     ],
   },
+  timeout: 5000,
 });
