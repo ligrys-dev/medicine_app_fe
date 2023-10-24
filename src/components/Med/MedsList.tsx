@@ -25,7 +25,8 @@ export const MedsList = () => {
     } catch (e) {
       handleError(e as HTTPError);
     }
-  }, [handleError]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleDeleteMed = async (id: string) => {
     if (window.confirm('Czy na pewno chcesz usunąć ten lek?')) {

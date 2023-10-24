@@ -32,7 +32,8 @@ export const QRcode = ({ id, onCloseQr, prescNum }: Props) => {
     } catch (e) {
       handleError(e as HTTPError);
     }
-  }, [id, handleError]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   if (error)
     return (

@@ -30,7 +30,8 @@ export const AssignMeds = ({ onCancel, onSave }: Props) => {
         handleError(e as HTTPError);
       }
     })();
-  }, [handleError]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
