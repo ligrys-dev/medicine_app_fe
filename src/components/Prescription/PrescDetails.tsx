@@ -13,6 +13,7 @@ import { StyledLink } from '../styled/StyledLink';
 import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
 import { ErrorPage } from '../common/ErrorPage';
 import { HTTPError } from 'ky';
+import { StyledSectionHeader } from '../styled/StyledSectionHeader';
 
 interface Props {
   id: string;
@@ -56,9 +57,13 @@ export const PrescDetails = ({ id }: Props) => {
   };
 
   const handleDeletePrescClick = async () => {
-    if (window.confirm('Czy na pewno chcesz usunąć ten lek?')) {
-      await api.delete(`${config.apiUrl}/prescription/${id}`);
-      navigate('/medicine');
+    if (window.confirm('Czy na pewno chcesz usunąć tą receptę?')) {
+      try {
+        await api.delete(`${config.apiUrl}/prescription/${id}`);
+        navigate('/presc');
+      } catch (e) {
+        handleError(e as HTTPError);
+      }
     }
   };
 
@@ -75,7 +80,7 @@ export const PrescDetails = ({ id }: Props) => {
 
   return (
     <PrescContainer>
-      <h2>Szczegóły recepty:</h2>
+      <StyledSectionHeader>Szczegóły recepty:</StyledSectionHeader>
       <div>Numer recepty: {presc.prescriptionNumber}</div>
       <div>
         Data wystawienia: {new Date(presc.issueDate).toLocaleDateString()}
@@ -101,7 +106,9 @@ export const PrescDetails = ({ id }: Props) => {
       </div>
       <StyledLink to="../presc">Powrót</StyledLink>
 
-      <DeleteBtn onClick={() => handleDeletePrescClick}>Usuń receptę</DeleteBtn>
+      <DeleteBtn onClick={() => handleDeletePrescClick()}>
+        Usuń receptę
+      </DeleteBtn>
     </PrescContainer>
   );
 };

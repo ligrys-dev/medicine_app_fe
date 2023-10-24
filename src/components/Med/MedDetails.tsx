@@ -13,6 +13,7 @@ import { StyledLink } from '../styled/StyledLink';
 import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
 import { ErrorPage } from '../common/ErrorPage';
 import { HTTPError } from 'ky';
+import { StyledSectionHeader } from '../styled/StyledSectionHeader';
 
 interface Props {
   id: string;
@@ -92,6 +93,7 @@ export const MedDetails = ({ id }: Props) => {
 
   return (
     <MedContainer>
+      <StyledSectionHeader>Szczegóły leku:</StyledSectionHeader>
       <div>
         {med.name} - {med.form}
       </div>
@@ -136,7 +138,7 @@ export const MedDetails = ({ id }: Props) => {
 
       <div>Notatka: {med.note}</div>
       <StyledLink to="../medicine">Powrót</StyledLink>
-      <DeleteBtn onClick={() => handleDeleteMedClick}>Usuń</DeleteBtn>
+      <DeleteBtn onClick={() => handleDeleteMedClick()}>Usuń</DeleteBtn>
     </MedContainer>
   );
 };
