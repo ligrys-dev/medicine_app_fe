@@ -34,7 +34,6 @@ export const MedDetails = ({ id }: Props) => {
         .get(`${config.apiUrl}/prescription/medicine/${id}`)
         .json();
 
-      // console.log(prescriptionData);
       setPrescriptions(prescriptionData as PrescriptionMedicine[]);
     })();
   }, [id]);

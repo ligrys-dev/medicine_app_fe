@@ -25,7 +25,6 @@ export const AssignMeds = ({ onCancel, onSave }: Props) => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    // console.log('Wybrana opcja:', selectedOption);
     onSave(selectedOption);
   };
 

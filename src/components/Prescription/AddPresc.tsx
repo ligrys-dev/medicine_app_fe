@@ -26,7 +26,6 @@ export function AddPresc() {
   const onSubmit: SubmitHandler<PrescriptionEntity> = async (
     data: PrescriptionEntity,
   ): Promise<string> => {
-    // console.log(data);
     setInsertedId(
       await api.post(`${config.apiUrl}/prescription`, { json: data }).json(),
     );

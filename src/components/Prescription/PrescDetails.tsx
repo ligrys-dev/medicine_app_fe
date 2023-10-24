@@ -31,13 +31,11 @@ export const PrescDetails = ({ id }: Props) => {
       const medsData = await api
         .get(`${config.apiUrl}/medicine/prescription/${id}`)
         .json();
-      // console.log(medsData);
       setMeds(medsData as string[]);
     })();
   }, [id]);
 
   const handleSaveAssigning = async (assignedMedId: string) => {
-    // console.log(assignedMedId);
     await api.patch(`${config.apiUrl}/prescription/${id}/${assignedMedId}`);
 
     const medsData = await api
