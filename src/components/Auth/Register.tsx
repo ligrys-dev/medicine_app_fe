@@ -14,7 +14,7 @@ import { ErrorPage } from '../common/ErrorPage';
 interface RegisterData {
   username: string;
   email: string;
-  PESELnumber: string;
+  peselNumber: string;
   password: string;
   confirmPwd: string;
 }
@@ -35,7 +35,7 @@ export const Register: FC = () => {
     username,
     password,
     email,
-    PESELnumber,
+    peselNumber,
     confirmPwd,
   }: RegisterData): Promise<void> => {
     if (password !== confirmPwd) {
@@ -45,7 +45,7 @@ export const Register: FC = () => {
 
     try {
       await ky.post(`${config.apiUrl}/register`, {
-        json: { username, password, email, PESELnumber },
+        json: { username, password, email, peselNumber },
       });
 
       navigate('/login');
@@ -94,7 +94,7 @@ export const Register: FC = () => {
             <input
               type="number"
               placeholder="PESEL"
-              {...register('PESELnumber', {
+              {...register('peselNumber', {
                 required: true,
                 maxLength: 11,
                 minLength: 11,
