@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Login } from 'src/components/Auth/Login';
 import { Register } from 'src/components/Auth/Register';
@@ -7,7 +7,7 @@ import { AppView } from 'src/views/AppView';
 import { useAuth } from './utils/hooks/useAuth';
 
 interface Props {
-  children: ReactNode;
+  children: JSX.Element;
 }
 
 const PrivateRoute = ({ children }: Props) => {

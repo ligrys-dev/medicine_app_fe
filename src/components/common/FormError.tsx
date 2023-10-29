@@ -7,6 +7,6 @@ interface Props {
 }
 
 export const FormError = ({ message, error }: Props) => {
-  if (!error) return;
+  if (!error) return null;
   return <span>{message}</span>;
 };
