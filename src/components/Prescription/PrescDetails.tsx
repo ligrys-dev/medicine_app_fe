@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
-// import ky from 'ky';
-import { PrescriptionEntity } from '../../../../medicine_app_be/types';
+import { PrescriptionEntity } from 'types';
 import { Spinner } from 'src/components/common/Spinner';
 import { config } from 'src/utils/config/config';
 import { AssignMeds } from 'src/components/Prescription/AssignMeds';
 import { api } from 'src/utils/api';
 import { useNavigate } from 'react-router-dom';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
+import { HTTPError } from 'ky';
+import { ErrorPage } from '../common/ErrorPage';
 import styled from 'styled-components';
 import { DeleteBtn } from '../common/DeleteBtn';
 import { StyledBtn } from '../styled/StyledBtn';
 import { StyledLink } from '../styled/StyledLink';
-import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
-import { ErrorPage } from '../common/ErrorPage';
-import { HTTPError } from 'ky';
 import { StyledSectionHeader } from '../styled/StyledSectionHeader';
 
 interface Props {

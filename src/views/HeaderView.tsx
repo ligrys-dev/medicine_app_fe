@@ -2,21 +2,19 @@ import { Link } from 'react-router-dom';
 import { Logout } from 'src/components/Auth/Logout';
 import styled from 'styled-components';
 
-export const HeaderView = () => {
-  return (
-    <HeaderContainer>
-      <StyledHeader>
-        <h1>Portfel e-recept i leków </h1>
-        <StyledNav>
-          <NavLink to="/medicine">Leki</NavLink>{' '}
-          <NavLink to="/medicine/add">Dodaj lek</NavLink>{' '}
-          <NavLink to="/presc">Recepty</NavLink>{' '}
-          <NavLink to="/presc/add">Dodaj receptę</NavLink> <Logout />
-        </StyledNav>
-      </StyledHeader>
-    </HeaderContainer>
-  );
-};
+export const HeaderView = () => (
+  <HeaderContainer>
+    <StyledHeader>
+      <h1>Portfel e-recept i leków </h1>
+      <StyledNav>
+        <NavLink to="/medicine">Leki</NavLink>{' '}
+        <NavLink to="/medicine/add">Dodaj lek</NavLink>{' '}
+        <NavLink to="/presc">Recepty</NavLink>{' '}
+        <NavLink to="/presc/add">Dodaj receptę</NavLink> <Logout />
+      </StyledNav>
+    </StyledHeader>
+  </HeaderContainer>
+);
 
 const HeaderContainer = styled.div`
   width: 80vw;

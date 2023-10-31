@@ -1,6 +1,6 @@
 import { SimpleMedicineEntity } from 'types';
-import { StyledLink } from '../styled/StyledLink';
 import { DeleteBtn } from '../common/DeleteBtn';
+import { StyledLink } from '../styled/StyledLink';
 
 interface Props {
   med: SimpleMedicineEntity;

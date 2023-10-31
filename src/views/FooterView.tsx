@@ -1,14 +1,12 @@
 import styled from 'styled-components';
 
-export const FooterView = () => {
-  return (
-    <>
-      <Footer>
-        <p>Projekt na zaliczenie MegaK -- Maciej Ligęza 2023</p>
-      </Footer>
-    </>
-  );
-};
+export const FooterView = () => (
+  <>
+    <Footer>
+      <p>Projekt na zaliczenie MegaK -- Maciej Ligęza 2023</p>
+    </Footer>
+  </>
+);
 
 const Footer = styled.footer`
   text-align: center;

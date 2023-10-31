@@ -1,19 +1,18 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { MedicineEntity } from 'types';
-// import ky from 'ky';
 import { config } from 'src/utils/config/config';
 import { useState } from 'react';
 import { FormError } from 'src/components/common/FormError';
 import { api } from 'src/utils/api';
+import { HTTPError } from 'ky';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
+import { ErrorPage } from '../common/ErrorPage';
 import { StyledBtn } from '../styled/StyledBtn';
 import { StyledSubmit } from '../styled/StyledSubmit';
 import { StyledInput } from '../styled/form/StyledInput';
 import { Container } from '../styled/form/Container';
 import { StyledSpan } from '../styled/form/StyledSpan';
 import { StyledLabel } from '../styled/form/StyledLabel';
-import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
-import { ErrorPage } from '../common/ErrorPage';
-import { HTTPError } from 'ky';
 
 export function AddMed() {
   const [insertedId, setInsertedId] = useState<string | null>(null);

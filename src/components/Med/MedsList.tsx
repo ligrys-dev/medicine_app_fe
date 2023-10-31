@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { SimpleMedicineEntity } from 'types';
-// import ky from 'ky';
 import { config } from 'src/utils/config/config';
 import { Med } from 'src/components/Med/Med';
 import { Spinner } from 'src/components/common/Spinner';

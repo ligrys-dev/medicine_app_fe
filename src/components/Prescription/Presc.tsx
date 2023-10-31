@@ -1,9 +1,9 @@
 import { PrescriptionEntity } from 'types';
+import { useState } from 'react';
+import { QRcode } from './QRcode';
 import { DeleteBtn } from '../common/DeleteBtn';
 import { StyledLink } from '../styled/StyledLink';
 import { StyledBtn } from '../styled/StyledBtn';
-import { useState } from 'react';
-import { QRcode } from './QRcode';
 
 interface Props {
   presc: PrescriptionEntity;

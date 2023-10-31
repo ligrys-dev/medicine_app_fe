@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
-import { PrescriptionEntity } from '../../../../medicine_app_be/types';
-// import ky from 'ky';
+import { PrescriptionEntity } from 'types';
 import { config } from 'src/utils/config/config';
 import { Spinner } from 'src/components/common/Spinner';
 import { Presc } from 'src/components/Prescription/Presc';
 import { api } from 'src/utils/api';
-import { StyledList } from '../styled/StyledList';
 import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
-import { ErrorPage } from '../common/ErrorPage';
-import { StyledBtn } from '../styled/StyledBtn';
 import { HTTPError } from 'ky';
+import { ErrorPage } from '../common/ErrorPage';
+import { StyledList } from '../styled/StyledList';
+import { StyledBtn } from '../styled/StyledBtn';
 
 export const PrescList = () => {
   const [prescs, setPrescss] = useState<PrescriptionEntity[] | null>(null);

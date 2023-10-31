@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { StyledAuthLink } from '../styled/StyledAuthLink';
 import Cookie from 'js-cookie';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { ErrorPage } from '../common/ErrorPage';
 import { StyledSubmit } from '../styled/StyledSubmit';
 import { FormError } from '../common/FormError';
 import { StyledBtn } from '../styled/StyledBtn';
-import { ErrorPage } from '../common/ErrorPage';
-import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
 
 interface LoginData {
   username: string;

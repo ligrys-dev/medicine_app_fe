@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Dosage, MedicineEntity, PrescriptionMedicine } from 'types';
-// import ky from 'ky';
 import { config } from 'src/utils/config/config';
 import { Spinner } from 'src/components/common/Spinner';
 import { DosageEditor } from 'src/components/Med/DosageEditor';
 import { api } from 'src/utils/api';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
 import styled from 'styled-components';
+import { HTTPError } from 'ky';
 import { DeleteBtn } from '../common/DeleteBtn';
+import { ErrorPage } from '../common/ErrorPage';
 import { StyledBtn } from '../styled/StyledBtn';
 import { StyledLink } from '../styled/StyledLink';
-import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
-import { ErrorPage } from '../common/ErrorPage';
-import { HTTPError } from 'ky';
 import { StyledSectionHeader } from '../styled/StyledSectionHeader';
 
 interface Props {

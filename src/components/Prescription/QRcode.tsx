@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { api } from 'src/utils/api';
 import { config } from 'src/utils/config/config';
+import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
+import { HTTPError } from 'ky';
+import { Spinner } from '../common/Spinner';
+import { ErrorPage } from '../common/ErrorPage';
 import styled from 'styled-components';
 import { StyledBtn } from '../styled/StyledBtn';
-import { Spinner } from '../common/Spinner';
-import { useErrorHandler } from 'src/utils/hooks/useErrorHandler';
-import { ErrorPage } from '../common/ErrorPage';
-import { HTTPError } from 'ky';
 
 interface Props {
   id: string;

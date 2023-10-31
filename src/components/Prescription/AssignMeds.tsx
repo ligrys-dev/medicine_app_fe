@@ -1,5 +1,4 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
-// import ky from 'ky';
 import { SimpleMedicineEntity } from 'types';
 import { CancelBtn } from 'src/components/common/CancelBtn';
 import { config } from 'src/utils/config/config';
