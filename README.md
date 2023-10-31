@@ -1,27 +1,83 @@
-# React + TypeScript + Vite
+# Portfel e-recept
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplikacja do zarządzania e-receptami i lekami posiadanymi w domowej apteczce.
 
-Currently, two official plugins are available:
+## Podgląd na żywo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[maclig92.smallhost.pl](https://maclig92.smallhost.pl)
 
-## Expanding the ESLint configuration
+### Kluczowe cechy:
+- #### Recepty:
+  - dodawanie recept z portfela z podziałem czy recepta jest roczna lub jest na antybiotyk oraz usuwanie ich
+  - wyświetlanie kodu QR recepty powiązanego z PESELem użytkownika
+  - przypisywanie leków do recepty
+- #### Leki:
+  - dodawanie i usuwanie leków
+  - wyświetlanie szczegółów leku, gdzie znajduje się link z numerem powiązanej e-recepty, dawkowanie, notatka o leku oraz ewentualna data rozpoczęcia i zakończenia stosowania
+  - edycja dawkowania
+    
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Wykorzystane technologie:
+- backend
+  - nodejs
+  - express.js
+  - mySQL
+  - typescript
+  - bcrypt
+  - jwt
+  - crypto
+  - dotenv
+  - qrcode
+- frontend
+  - react
+  - react-router
+  - react-hook-form
+  - styled-components
+  - typescript
+  - vite
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+
+## Uruchomienie aplikacji lokalnie
+
+### Backend
+
+stwórz katalog z projektem np.:
+
+```
+mkdir medicnie_app
+```
+przejdź do tego katalogu i pobierz kod z repozytorium
+
+```
+cd ./medicine_app
+```
+```
+git clone https://github.com/maclig92/medicine_app_be.git
+```
+```
+cd ./medicine_app_be
+```
+otwórz phpMyAdmin albo innego klienta SQL,
+skopuj kod z pliku createDb.sql z katalogu sql
+i wykonaj go w kliencie SQL
+
+```
+npm install
+```
+edytuj pliki w katalogu config:
+- config.example.ts -> zmień nazwę na config.ts, odkomentuj kod i wypełnij zmienne swoimi danymi
+- .env.egample -> zmień nazwę na .env, przenieś do głównego katalogu aplikacji backendowej i ustaw swoje wartości zmiennych środowiskowych
+```
+npm run start:dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Frontend
+
+```
+cd ~/medicine_app
+git clone https://github.com/maclig92/medicine_app_fe.git
+cd ./medicine_app_fe
+npm install
+npm run dev
+```
